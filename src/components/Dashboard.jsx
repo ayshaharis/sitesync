@@ -6,6 +6,7 @@ const DashBoard=()=>{
                 <DashBoardCard title="Active Sites" value="5 sites"/>
                 <DashBoardCard title="completed Sites" value="3"/>
                 <DashBoardCard title="Upcoming Projects" value="10"/>
+                
         </div>
    
 

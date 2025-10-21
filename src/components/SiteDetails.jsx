@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import DailyLog from "./DailyLog";
 import DailyExpenditure from "./DailyExpenditure";
+import SiteVisits from "./SiteVisits";
+import DocumentsUpload from "./DocumentsUpload";
 
 const SiteDetails = () => {
   const { id } = useParams();
@@ -38,10 +40,17 @@ const SiteDetails = () => {
   };
 
   return (
-    <div>
-        <DailyLog/>
-        <DailyExpenditure/>
-             <div className="p-6 max-w-md mx-auto bg-white shadow rounded">
+  <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+    {/* Left Side: Logs, Expenditure, Visits */}
+    <div className="space-y-6">
+      <DailyLog siteId={id} />
+      <DailyExpenditure siteId={id} />
+      <SiteVisits siteId={id}/>
+    </div>
+
+    {/* Right Side: Site Details */}
+    <div className="max-w-md mx-auto bg-white shadow rounded p-6 h-full flex flex-col justify-between">
+      <DocumentsUpload/>
       <h1 className="text-xl font-bold mb-4">Site #{id} Details</h1>
 
       {isEditing ? (
@@ -58,13 +67,13 @@ const SiteDetails = () => {
           ))}
           <button
             onClick={handleSave}
-            className="bg-green-600 text-white px-4 py-2 rounded w-full"
+            className="bg-green-600 text-white px-4 py-2 rounded w-full mt-2"
           >
-            {isEditing?"save":"Edit"}
+            {isEditing ? "Save" : "Edit"}
           </button>
         </>
       ) : siteInfo ? (
-        <div>
+        <div className="flex flex-col gap-2 flex-1">
           <p><b>Name:</b> {siteInfo?.name}</p>
           <p><b>Location:</b> {siteInfo?.location}</p>
           <p><b>Owner:</b> {siteInfo?.owner}</p>
@@ -73,32 +82,30 @@ const SiteDetails = () => {
 
           <button
             onClick={() => setIsEditing(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded mt-2"
+            className="bg-blue-600 text-white px-4 py-2 rounded mt-4"
           >
-           Edit
+            Edit
           </button>
         </div>
-      ) :  (
-      <div>
-        <p><b>Name:</b> {siteInfo?.name || "Not set"}</p>
-        <p><b>Location:</b> {siteInfo?.location || "Not set"}</p>
-        <p><b>Owner:</b> {siteInfo?.owner || "Not set"}</p>
-        <p><b>Phone:</b> {siteInfo?.phone || "Not set"}</p>
-        <p><b>Start Date:</b> {siteInfo?.startDate || "Not set"}</p>
+      ) : (
+        <div className="flex flex-col gap-2 flex-1">
+          <p><b>Name:</b> {siteInfo?.name || "Not set"}</p>
+          <p><b>Location:</b> {siteInfo?.location || "Not set"}</p>
+          <p><b>Owner:</b> {siteInfo?.owner || "Not set"}</p>
+          <p><b>Phone:</b> {siteInfo?.phone || "Not set"}</p>
+          <p><b>Start Date:</b> {siteInfo?.startDate || "Not set"}</p>
 
-        <button
-          onClick={() => setIsEditing(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded mt-2"
-        >
-          {siteInfo ? "Edit" : "Add Details"}
-        </button>
-      </div>
-    )}
+          <button
+            onClick={() => setIsEditing(true)}
+            className="bg-blue-600 text-white px-4 py-2 rounded mt-4"
+          >
+            {siteInfo ? "Edit" : "Add Details"}
+          </button>
+        </div>
+      )}
     </div>
-    </div>
-    
-    
-  );
+  </div>
+);
 };
 
 export default SiteDetails;

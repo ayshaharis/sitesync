@@ -1,0 +1,47 @@
+-Entities
+
+Site
+{
+  id: "site-1",
+  name: "Building A",
+  location: "Kerala",
+  owner: "John Doe",
+  phone: "1234567890",
+  startDate: "2025-01-01",
+  status: "active", // active, completed, upcoming
+  budget: 500000,
+  createdAt: "2025-10-08",
+  completionDate:"some date"
+}
+
+worker
+{
+    id:"worker-1",
+    name:"Aysha",
+    phone:"12134378",
+    department:"carpenter",
+    wage:"1000"
+
+}
+
+expenses
+{
+    site_id:"siteaid"
+    site_name:"site 1",
+    date:date,
+    amount:"10000",
+    description:"sepnt for waht",
+    bill:upload bill
+}
+
+daily log
+{
+    site:siteid,
+    site:sitename,
+    date:todaysdate,
+    worker:worker name ,
+    wage:900,
+    payment:900
+    paid:900,
+    pending:000
+}
