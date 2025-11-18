@@ -1,50 +1,78 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import SiteCard from "./SiteCard";
-import NewSiteForm from "./NewSiteForm";
-const SiteGrid=()=>{
-    const [sites,setSites]=useState([  
-        { id:"1" ,name:"Home",location:"calicut",status:"completed"},
-        { id:"2" ,name: "Resort", location: "Wayanad", status: "In-progress"},
-        { id:"3" ,name: "Commercial Building", location: "Bangalore", status: "Completed"}] )
-        useEffect(()=>{
+import AddSiteModal from "./AddSiteModal";
 
-            const savedSites=localStorage.getItem("sites");
-            if(savedSites){
-                try{
-                    setSites(JSON.parse(savedSites));
-                }
-                catch(err){
-                    console.error("error getting data from local storage",err);
-                    
-                }
-            }
-           
-        },[])
-  const handleAddSite=(newsite)=>{
-    const newId=(sites.length+1).toString();
-    const updatedSites=([...sites,{...newsite,id:newId}]);
-    setSites(updatedSites)
-    localStorage.setItem("sites",JSON.stringify(updatedSites))
-  }
+const SiteGrid = () => {
+  const [sites, setSites] = useState([
+    { id: "1", name: "Home", location: "Calicut", status: "Completed" },
+    { id: "2", name: "Resort", location: "Wayanad", status: "In Progress" },
+    { id: "3", name: "Commercial Building", location: "Bangalore", status: "Completed" },
+  ]);
 
-    return(
-        <>
+  const [showModal, setShowModal] = useState(false);
 
-   
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6"> 
-           {sites.map((site,index)=>(<SiteCard 
-           key={site.id||index}
-           id={site.id}
-            name={site.name} 
+  // Load saved data from localStorage
+  useEffect(() => {
+    const savedSites = localStorage.getItem("sites");
+    if (savedSites) {
+      try {
+        setSites(JSON.parse(savedSites));
+      } catch (err) {
+        console.error("Error reading localStorage", err);
+      }
+    }
+  }, []);
+
+  // Open the modal
+  const handleAddSite = () => {
+    setShowModal(true);
+  };
+
+  // Save new site
+  const handleSaveSite = (newSite) => {
+    const newId = (sites.length + 1).toString();
+    const updatedSites = [...sites, { ...newSite, id: newId }];
+
+    setSites(updatedSites);
+    localStorage.setItem("sites", JSON.stringify(updatedSites));
+
+    setShowModal(false); // close modal after saving
+  };
+
+  return (
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
+
+        {/* Add New Site Button */}
+        <SiteCard
+          name="Add New Site +"
+          onClick={handleAddSite}
+          isAddCard={true}
+        />
+
+        {/* All Site Cards */}
+        {sites.map((site, index) => (
+          <SiteCard
+            key={site.id || index}
+            id={site.id}
+            name={site.name}
             location={site.location}
-            status={site.status}/>)
+            status={site.status}
             
-           )}
-        </div>
-     <NewSiteForm onAddSite={handleAddSite}/>
-     
+          />
+        ))}
+
+      </div>
+
+      {/* Modal */}
+      {showModal && (
+        <AddSiteModal
+          onSave={handleSaveSite}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </>
-    )
-}
+  );
+};
 
 export default SiteGrid;

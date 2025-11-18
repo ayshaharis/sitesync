@@ -1,9 +1,10 @@
 import { useState } from "react";
-import useAppProvider from "../context/useAppProvider";
+import useAppProvider from "../../context/useAppProvider";
 
 const DailyLog = ({ siteId }) => {
   const { dailyLogs, setDailyLogs } = useAppProvider();
   const [isAdding, setIsAdding] = useState(false);
+  const [showAll,setShowAll]=useState(false);
 
   const [newEntries, setNewEntries] = useState({
     date: "",
@@ -45,6 +46,10 @@ const DailyLog = ({ siteId }) => {
     setIsAdding(false);
     setNewEntries({ date: "", worker: "", work: "", wage: "", paid: "", pending: "" });
   };
+  const handleExport=()=>{
+    //handle export of weekly summary
+ 
+  }
 
   // Calculate total pending for this site
   const totalPending = dailyLogs
@@ -152,12 +157,21 @@ const DailyLog = ({ siteId }) => {
             </button>
           </>
         ) : (
-          <button
+          <div>
+                 <button
             onClick={handleAddEntry}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+            className=" m-2 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
           >
             Add Entry
           </button>
+                  <button
+            onClick={handleExport}
+            className="m-2 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+          >
+           Export
+          </button>
+            </div>
+     
         )}
       </div>
     </div>

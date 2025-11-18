@@ -1,0 +1,29 @@
+import { useState } from "react";
+import DailyUpdateModal from "./DailyUpdateModal";
+
+const QuickActions=({siteId})=>{
+    const [open,setOpen]=useState(false);
+    const handleSaveUpdate=(data)=>{
+        console.log("data saved daily update ",data);
+        setOpen(false)
+    }
+  
+    return(
+     <div className="bg-white rounded-2xl shadow-sm p-6 w-full max-w-sm border border-gray-200">
+         <h2 className="text-lg font-semibold mb-4 text-gray-900">Quick Actions</h2>
+
+        <button
+         onClick={()=>setOpen(true)}
+         className="w-full flex items-center gap-2 bg-[#020212] text-white font-medium px-4 py-3 rounded-xl mb-3 hover:bg-black transition"> 
+        Add Today's update +</button>
+        <button className="w-full flex items-center gap-2 border border-gray-300 rounded-xl mb-4 hover:bg-gray-100 transition text-gray-800 text-black font-medium px-4 py-3"> Upload Documnets</button>
+        <button className="w-full flex items-center gap-2 border border-gray-300 rounded-xl mb-4 hover:bg-gray-100 transition text-gray-800 text-black font-medium px-4 py-3"> Export Weekly Summary</button>
+       {open&&(
+        <DailyUpdateModal onClose={()=>setOpen(false)}
+        onSave={handleSaveUpdate}/>
+       )}
+     </div>
+  
+    )
+}
+export default QuickActions;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useAppProvider from "../context/useAppProvider";
+import useAppProvider from "../../context/useAppProvider";
 
 const SiteVisits = ({siteId}) => {
   const {visits,setVisits}=useAppProvider();

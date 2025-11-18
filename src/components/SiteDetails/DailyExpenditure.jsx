@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useAppProvider from "../context/useAppProvider";
+import useAppProvider from "../../context/useAppProvider";
 const DailyExpenditure=({siteId})=>{
 
  
