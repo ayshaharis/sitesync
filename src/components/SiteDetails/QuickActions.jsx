@@ -1,12 +1,9 @@
 import { useState } from "react";
 import DailyUpdateModal from "./DailyUpdateModal";
 
-const QuickActions=({siteId})=>{
+const QuickActions=({siteId,handleSaveUpdate})=>{
     const [open,setOpen]=useState(false);
-    const handleSaveUpdate=(data)=>{
-        console.log("data saved daily update ",data);
-        setOpen(false)
-    }
+
   
     return(
      <div className="bg-white rounded-2xl shadow-sm p-6 w-full max-w-sm border border-gray-200">
