@@ -17,7 +17,7 @@ const SiteDetails = () => {
    
       {/* Left: Logs, Expenses, Visits */}
       <div className="space-y-6">
-         
+        <SiteInfo />
         <DailyLog />
         <DailyExpenditure />
         <SiteVisits />
@@ -28,7 +28,7 @@ const SiteDetails = () => {
          <QuickActions siteId={id}/>
         <SiteProgress/>
         <DocumentsUpload />
-        <SiteInfo />
+    
        
        
       </div>

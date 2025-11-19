@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { MapPin, User, Phone, Calendar, Pencil } from "lucide-react";
+import EditSiteModal from "./EditSiteModal";
 
 const SiteInfo = () => {
   const { id } = useParams();
+
   const [siteInfo, setSiteInfo] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     location: "",
     owner: "",
     phone: "",
-    startDate: ""
+    startDate: "",
   });
-  const [isEditing, setIsEditing] = useState(false);
+
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem(`site-${id}`);
@@ -22,53 +26,56 @@ const SiteInfo = () => {
     }
   }, [id]);
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const handleSave = () => {
-    setSiteInfo(formData);
-    localStorage.setItem(`site-${id}`, JSON.stringify(formData));
-    setIsEditing(false);
+  const handleSave = (updated) => {
+    setSiteInfo(updated);
+    setFormData(updated);
+    localStorage.setItem(`site-${id}`, JSON.stringify(updated));
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white shadow rounded p-6 h-full flex flex-col justify-between">
-      <h1 className="text-xl font-bold mb-4">Site #{id} Details</h1>
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-5">
+        <h2 className="text-xl font-semibold text-gray-900">
+          Site Information
+        </h2>
 
-      {isEditing ? (
-        <>
-          {Object.keys(formData).map((key) => (
-            <input
-              key={key}
-              name={key}
-              placeholder={key}
-              value={formData[key]}
-              onChange={handleChange}
-              className="border rounded w-full mb-2 px-2 py-1"
-            />
-          ))}
-          <button
-            onClick={handleSave}
-            className="bg-green-600 text-white px-4 py-2 rounded w-full mt-2"
-          >
-            Save
-          </button>
-        </>
-      ) : (
-        <div className="flex flex-col gap-2 flex-1">
-          <p><b>Name:</b> {siteInfo?.name || "Not set"}</p>
-          <p><b>Location:</b> {siteInfo?.location || "Not set"}</p>
-          <p><b>Owner:</b> {siteInfo?.owner || "Not set"}</p>
-          <p><b>Phone:</b> {siteInfo?.phone || "Not set"}</p>
-          <p><b>Start Date:</b> {siteInfo?.startDate || "Not set"}</p>
-          <button
-            onClick={() => setIsEditing(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded mt-4"
-          >
-            {siteInfo ? "Edit" : "Add Details"}
-          </button>
-        </div>
-      )}
+        <button
+          onClick={() => setOpen(true)}
+          className="flex items-center gap-2 px-3 py-2 bg-black text-white rounded-xl hover:bg-gray-800 transition"
+        >
+          <Pencil size={16} /> Edit Site
+        </button>
+      </div>
+
+      {/* Info List */}
+      <div className="space-y-4">
+        <InfoRow icon={<User size={18} />} label="Site Name" value={siteInfo?.name} />
+        <InfoRow icon={<MapPin size={18} />} label="Location" value={siteInfo?.location} />
+        <InfoRow icon={<User size={18} />} label="Owner" value={siteInfo?.owner} />
+        <InfoRow icon={<Phone size={18} />} label="Phone" value={siteInfo?.phone} />
+        <InfoRow icon={<Calendar size={18} />} label="Start Date" value={siteInfo?.startDate} />
+      </div>
+
+      {/* Edit Modal */}
+      <EditSiteModal
+        open={open}
+        onClose={() => setOpen(false)}
+        onSave={handleSave}
+        data={siteInfo}
+      />
+    </div>
+  );
+};
+
+const InfoRow = ({ icon, label, value }) => {
+  return (
+    <div className="flex items-center gap-4 border-b pb-3">
+      <div className="text-gray-500">{icon}</div>
+      <div className="flex-1">
+        <p className="text-sm text-gray-500">{label}</p>
+        <p className="font-medium text-gray-900">{value || "Not set"}</p>
+      </div>
     </div>
   );
 };
