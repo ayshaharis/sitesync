@@ -12,6 +12,10 @@ const DailyUpdateCard = ({ update }) => {
       <p className="text-gray-800 text-base leading-relaxed mb-4">
         {summary || "No notes added"}
       </p>
+         <p className="text-gray-800 text-base leading-relaxed mb-4">
+        {description || "No notes added"}
+      </p>
+
 
       <div className="flex items-center gap-8 text-sm text-gray-700">
      

@@ -4,11 +4,8 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router,Route, Routes, Outlet, createBrowserRouter, RouterProvider} from 'react-router-dom'
 import DashBoard from './components/Dashboard'
 import Navbar from './components/Navbar'
-import SiteGrid from './components/SiteGrid'
-import NewSiteForm from './components/NewSiteForm'
 import SiteDetails from './components/SiteDetails/SiteDetails'
 import Footer from './components/Footer';
-import DailyUpdateModal from './components/SiteDetails/DailyUpdateModal';
 import HomePage from './components/HomePage';
 const AppLayout=()=>{
   return (
