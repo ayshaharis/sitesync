@@ -1,43 +1,31 @@
 import { useState, useEffect } from "react";
 import SiteCard from "./SiteCard";
 import AddSiteModal from "./AddSiteModal";
+import {addSite,getSites} from "../services/sitesService";
 
 const SiteGrid = () => {
-  const [sites, setSites] = useState([
-    { id: "1", name: "Home", location: "Calicut", status: "Completed" },
-    { id: "2", name: "Resort", location: "Wayanad", status: "In Progress" },
-    { id: "3", name: "Commercial Building", location: "Bangalore", status: "Completed" },
-  ]);
-
+const [sites, setSites] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  // Load saved data from localStorage
-  useEffect(() => {
-    const savedSites = localStorage.getItem("sites");
-    if (savedSites) {
-      try {
-        setSites(JSON.parse(savedSites));
-      } catch (err) {
-        console.error("Error reading localStorage", err);
-      }
-    }
-  }, []);
+useEffect(()=>{
+  fetchSites();
+},[]);
+ const fetchSites=async()=>{
+  const data=await getSites();
+  setSites(data);
+ }
 
-  // Open the modal
+ const handleSaveSite=async(newSite)=>{
+  const addedSite=await addSite(newSite);
+  setSites([...sites,addedSite]);
+  setShowModal(false);
+ }
+
+
   const handleAddSite = () => {
     setShowModal(true);
   };
 
-  // Save new site
-  const handleSaveSite = (newSite) => {
-    const newId = (sites.length + 1).toString();
-    const updatedSites = [...sites, { ...newSite, id: newId }];
-
-    setSites(updatedSites);
-    localStorage.setItem("sites", JSON.stringify(updatedSites));
-
-    setShowModal(false); // close modal after saving
-  };
 
   return (
     <>
@@ -64,7 +52,7 @@ const SiteGrid = () => {
 
       </div>
 
-      {/* Modal */}
+  
       {showModal && (
         <AddSiteModal
           onSave={handleSaveSite}

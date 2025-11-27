@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { MapPin, User, Phone, Calendar, Pencil } from "lucide-react";
 import EditSiteModal from "./EditSiteModal";
+import { getSiteById } from "../../services/sitesService";
 
 const SiteInfo = () => {
   const { id } = useParams();
@@ -10,22 +11,30 @@ const SiteInfo = () => {
   const [formData, setFormData] = useState({
     name: "",
     location: "",
-    owner: "",
-    phone: "",
-    startDate: "",
+    status: "",
+    owner_name:"",
+    contact:"",
+    budget:"",
+    notes:"",
+    start_date:"",
+    end_date:""
+
   });
 
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    const saved = localStorage.getItem(`site-${id}`);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      setSiteInfo(parsed);
-      setFormData(parsed);
-    }
-  }, [id]);
+//fetching infor of site based on id from params
+  useEffect(()=>{
+  fetchSiteInfo(id)
+  },[id]);
 
+  const fetchSiteInfo=async(id)=>{
+    const data=await getSiteById(id);
+    setSiteInfo(data);
+    setFormData(data);
+
+  }
+   
   const handleSave = (updated) => {
     setSiteInfo(updated);
     setFormData(updated);
@@ -52,9 +61,9 @@ const SiteInfo = () => {
       <div className="space-y-4">
         <InfoRow icon={<User size={18} />} label="Site Name" value={siteInfo?.name} />
         <InfoRow icon={<MapPin size={18} />} label="Location" value={siteInfo?.location} />
-        <InfoRow icon={<User size={18} />} label="Owner" value={siteInfo?.owner} />
+        <InfoRow icon={<User size={18} />} label="Owner" value={siteInfo?.owner_name} />
         <InfoRow icon={<Phone size={18} />} label="Phone" value={siteInfo?.phone} />
-        <InfoRow icon={<Calendar size={18} />} label="Start Date" value={siteInfo?.startDate} />
+        <InfoRow icon={<Calendar size={18} />} label="Start Date" value={siteInfo?.start_date} />
       </div>
 
       {/* Edit Modal */}
