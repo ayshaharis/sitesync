@@ -55,7 +55,9 @@ useEffect(()=>{
   
       {showModal && (
         <AddSiteModal
+           mode="add"
           onSave={handleSaveSite}
+          open={open}
           onClose={() => setShowModal(false)}
         />
       )}
@@ -64,3 +66,7 @@ useEffect(()=>{
 };
 
 export default SiteGrid;
+
+
+
+ 

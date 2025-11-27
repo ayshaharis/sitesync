@@ -1,6 +1,6 @@
 const DailyUpdateCard = ({ update }) => {
-  const { date, workers, wage, expenses, notes } = update;
-  const totalExpense=Number(wage)+Number(expenses);
+  const { date, workers, worker_wage, expenses, description,summary } = update;
+  const totalExpense=Number(worker_wage)+Number(expenses);
 
   return (
     <div className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
@@ -10,7 +10,7 @@ const DailyUpdateCard = ({ update }) => {
       </div>
 
       <p className="text-gray-800 text-base leading-relaxed mb-4">
-        {notes || "No notes added"}
+        {summary || "No notes added"}
       </p>
 
       <div className="flex items-center gap-8 text-sm text-gray-700">
