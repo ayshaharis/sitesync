@@ -7,7 +7,7 @@ const Navbar=()=>{
             <ul className="flex  justify-between items-center space-x-10">
             <Link to="/"><h1 className="text-2xl ">SiteSync</h1></Link>
             <Link to="/"><li> sites </li></Link>
-            <Link to="/payments"><li>payments</li></Link> 
+            <Link ><li>Miscellaneous works</li></Link> 
             <Link to="/upcomingprojects"><li>Upcoming projects</li></Link> 
             </ul>
              

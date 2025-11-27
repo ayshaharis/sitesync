@@ -9,6 +9,7 @@ import NewSiteForm from './components/NewSiteForm'
 import SiteDetails from './components/SiteDetails/SiteDetails'
 import Footer from './components/Footer';
 import DailyUpdateModal from './components/SiteDetails/DailyUpdateModal';
+import HomePage from './components/HomePage';
 const AppLayout=()=>{
   return (
     <div className='app-layout'>
@@ -27,28 +28,14 @@ const appRouter=createBrowserRouter([
     errorElement:<Error/>,
     children:[{
       path:"/",
-      element:(
-        <>
-        <h1  className="text-xl font-bold text-center my-4">SiteSync - Your Hassle-Free Site Management Partner</h1>
-        <DashBoard/>
-        <SiteGrid/>
-    
-        </>
-      ),
+      element:<HomePage/>,
     },
   {
     path:"/site/:id",
     element:<SiteDetails/>
   },
    
-{
-  path:"/payments",
-  element:(
-    <div>
-      all payment infos here
-    </div>
-  )
-},
+
 {
   path:"/upcomingprojects",
   element:(
