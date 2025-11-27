@@ -4,15 +4,26 @@ import SiteProgress from "./SiteProgress";
 import QuickActions from "./QuickActions";
 import { useParams } from "react-router-dom";
 import DailyUpdates from "./DailyUpdates";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchDailyUpdates,saveDailyUpdates } from "../../services/dailyUpdatesService";
 
 const SiteDetails = () => {
   const { id } = useParams();
   
   const [dailyUpdates,setDailyUpdates]=useState([])
+  useEffect(()=>{
+    fetchUpdates(id);
+  },[id]);
+
+  const fetchUpdates=async(id)=>{
+    const data=await fetchDailyUpdates(id);
+    setDailyUpdates(data);
+  }
   //this data is coming from child quickactions 
-const handleSaveUpdate=(data)=>{
-  setDailyUpdates(prev=>[...prev,data])
+const handleSaveUpdate=async(update)=>{
+  console.log("save update called in site details with id:",id);
+  await saveDailyUpdates(update,id);
+ fetchUpdates(id);
 }
 
  return (

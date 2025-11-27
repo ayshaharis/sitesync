@@ -5,7 +5,7 @@ const QuickActions=({siteId,handleSaveUpdate})=>{
     const [open,setOpen]=useState(false);
     const [upload,setUpload]=useState(false);
 
-  
+    
     return(
      <div className="bg-white rounded-2xl shadow-sm p-6 w-full max-w-sm border border-gray-200">
          <h2 className="text-lg font-semibold mb-4 text-gray-900">Quick Actions</h2>
