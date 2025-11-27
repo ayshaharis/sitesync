@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import ModalWrapper from "./ModalWrapper";
+import { useParams } from "react-router-dom";
 
-const AddSiteModal = ({ onSave, onClose }) => {
+const AddSiteModal = ({mode,data,open ,onSave, onClose }) => {
+   const {id}=useParams();
   const [formData, setFormData] = useState({
     name: "",
     location: "",
@@ -14,6 +16,11 @@ const AddSiteModal = ({ onSave, onClose }) => {
     end_date:""
 
   });
+  useEffect(()=>{
+    if(mode==="edit" && data){
+      setFormData(data)
+    }
+  },[data])
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,15 +28,16 @@ const AddSiteModal = ({ onSave, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(formData);
-    console.log(formData);
+    onSave(formData,id);
+    onClose();
   };
+  if(!open) return null;
 
   return (
     <ModalWrapper onClose={onClose}>
 <div className="fixed inset-0 bg-black/10 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-2xl shadow-xl w-11/12 md:w-2/3 lg:w-1/2">
-        <h2 className="text-xl font-bold mb-4 text-green-800">Add New Site</h2>
+        <h2 className="text-xl font-bold mb-4 text-green-800">{mode==="edit"?"Edit site information":"Add new site details"}</h2>
 
         <form onSubmit={handleSubmit}className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
@@ -61,9 +69,8 @@ const AddSiteModal = ({ onSave, onClose }) => {
             <input
               type="text"
               name="owner_name"
-              value={formData.owner}
+              value={formData.owner_name}
               onChange={handleChange}
-              required
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
           </div>
@@ -74,9 +81,9 @@ const AddSiteModal = ({ onSave, onClose }) => {
               name="contact"
               value={formData.contact}
               onChange={handleChange}
-              required
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
+               </div>
                <div>
             <label className="block text-sm text-gray-700">Work type</label>
             <input
@@ -84,11 +91,10 @@ const AddSiteModal = ({ onSave, onClose }) => {
               name="notes"
               value={formData.notes}
               onChange={handleChange}
-              required
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
           </div>
-          </div>
+       
               <div>
             <label className="block text-sm text-gray-700">Enter estimated budget</label>
             <input
@@ -96,7 +102,6 @@ const AddSiteModal = ({ onSave, onClose }) => {
               name="budget"
               value={formData.budget}
               onChange={handleChange}
-              required
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
           </div>
@@ -105,9 +110,9 @@ const AddSiteModal = ({ onSave, onClose }) => {
             <input
               type="date"
               name="start_date"
-              value={formData.startdate}
+              value={formData.start_date}
               onChange={handleChange}
-              required
+              
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
           </div>
@@ -116,9 +121,9 @@ const AddSiteModal = ({ onSave, onClose }) => {
             <input
               type="date"
               name="end_date"
-              value={formData.enddate}
+              value={formData.end_date}
               onChange={handleChange}
-              required
+              
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
           </div>
@@ -130,7 +135,7 @@ const AddSiteModal = ({ onSave, onClose }) => {
               name="status"
               value={formData.status}
               onChange={handleChange}
-              required
+              
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             >
               <option value="">Select Status</option>

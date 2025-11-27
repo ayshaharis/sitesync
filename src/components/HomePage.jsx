@@ -7,7 +7,7 @@ const HomePage=()=>{
         <div>
         <Banner/>
         <DashBoard/>
-         <SiteGrid/>
+        <SiteGrid/>
         
         </div>
     )
