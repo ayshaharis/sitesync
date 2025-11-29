@@ -20,6 +20,8 @@ const QuickActions=({siteId,handleSaveUpdate,handleEditUpdate})=>{
         <DailyUpdateModal 
         onClose={()=>setOpen(false)}
         onSave={handleSaveUpdate}
+        open={open}
+        mode="add"
         />
        )}
        {
