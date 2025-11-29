@@ -3,7 +3,7 @@ import ModalWrapper from "../ModalWrapper";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const DailyUpdateModal = ({ onClose, onSave,data,mode,openEdit,updateId }) => {
+const DailyUpdateModal = ({ onClose,open, onSave,data,mode,openEdit,updateId }) => {
   const [form, setForm] = useState({
     date: "",
     workers: "",
@@ -37,7 +37,7 @@ const DailyUpdateModal = ({ onClose, onSave,data,mode,openEdit,updateId }) => {
     onSave(updateData);
     onClose();
   };
-if(!openEdit) return null;
+if(!openEdit && !open) return null;
   return (
     <ModalWrapper onClose={onClose}>
 
