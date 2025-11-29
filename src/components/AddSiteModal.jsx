@@ -20,7 +20,7 @@ const AddSiteModal = ({mode,data,open ,onSave, onClose }) => {
     if(mode==="edit" && data){
       setFormData(data)
     }
-  },[data])
+  },[data,mode])
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

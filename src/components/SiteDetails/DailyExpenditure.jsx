@@ -124,3 +124,7 @@ const categoryTotal=expenses.reduce((acc,curr)=>{
   acc[curr.category]+=curr.amount;
   }
   acc[curr.category]=curr.amount;},{})*/       
+
+
+
+  
