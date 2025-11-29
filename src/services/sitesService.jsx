@@ -25,7 +25,20 @@ export const getSiteById=async(id)=>{
 
 export const updateSiteById=async(updates,id)=>{
     console.log("Updating site with id:", id, "with updates:", updates);
-    const {data,error}=await supabase.from("sites").update(updates).eq("id",id).select().single();
+    const {data,error}=await supabase.from("sites")
+    .upsert({
+      id: id,
+      name: updates.name,
+      location: updates.location,
+      client: updates.client,
+      status: updates.status,
+      budget: updates.budget,
+      start_date: updates.start_date,
+      end_date: updates.end_date
+    })
+    .select()
+    .single();
+    
     console.log("Update response data:", data, "error:", error);
     if(error) throw error;
     return data;

@@ -5,10 +5,7 @@ import { getSiteById, updateSiteById } from "../../services/sitesService";
 import AddSiteModal from "../AddSiteModal";
 const SiteInfo = () => {
   const { id } = useParams();
-
   const [siteInfo, setSiteInfo] = useState(null);
-
-
   const [open, setOpen] = useState(false);
 
 //fetching infor of site based on id from params
