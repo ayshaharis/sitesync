@@ -58,7 +58,7 @@ if(!openEdit && !open) return null;
         <input type="text" name="description" value={form.description} placeholder="Description" onChange={handleChange} className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
 
 
-        <textarea name="summary" placeholder="Work Summary" value={form.summary} className="w-full border  border-gray-300 p-2 rounded-lg" onChange={handleChange} />
+        <textarea name="summary" rows="4" placeholder="Work Summary" value={form.summary} className="w-full border  border-gray-300 p-2 rounded-lg" onChange={handleChange} />
 
         <div className="flex justify-end gap-3">
           <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-300 rounded-lg">

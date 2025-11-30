@@ -7,6 +7,12 @@ import Navbar from './components/Navbar'
 import SiteDetails from './components/SiteDetails/SiteDetails'
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
+import Banner from './components/Banner';
+import { AuthProvider } from './context/Authcontext';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import ProtectedRoute from './components/ProtectedRoute';
+import LandingPage from './components/LandingPage';
 const AppLayout=()=>{
   return (
     <div className='app-layout'>
@@ -18,32 +24,42 @@ const AppLayout=()=>{
 
 };
 
-const appRouter=createBrowserRouter([
-  {
-    path:'/',
-    element:<AppLayout/>,
-    errorElement:<Error/>,
-    children:[{
-      path:"/",
-      element:<HomePage/>,
-    },
-  {
-    path:"/site/:id",
-    element:<SiteDetails/>
-  },
-   
+const appRouter = createBrowserRouter([
+   { path: "/login", element: <Login /> },
+    { path: "/signup", element: <SignUp /> },
+        { path: "/", element: <LandingPage/> },
 
-{
-  path:"/upcomingprojects",
-  element:(
-    <div>
-      all upcoming projects here
-    </div>
-  )
-},
-]
-  }
-])
+  {
+    path: "/",
+    element: (
+      <AuthProvider>
+        <AppLayout />
+      </AuthProvider>
+    ),
+    children: [
+      { path: "/home",
+         element:
+          <HomePage />
+         },
+     
+
+      {
+        path: "/site/:id",
+        element: (
+        
+            <SiteDetails />
+          
+        ),
+      },
+
+      {
+        path: "/upcomingprojects",
+        element: <div>all upcoming projects here</div>,
+      },
+    ],
+  },
+]);
+
 
 
 function App(){
