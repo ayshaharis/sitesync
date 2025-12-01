@@ -1,30 +1,35 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { MapPin, User, Phone, Calendar, Pencil } from "lucide-react";
-import { getSiteById, updateSiteById } from "../../services/sitesService";
 import AddSiteModal from "../AddSiteModal";
+import { useSite,useUpdateSite } from "../../hooks/useSites";
+
+
 const SiteInfo = () => {
-  const { id } = useParams();
-  const [siteInfo, setSiteInfo] = useState(null);
-  const [open, setOpen] = useState(false);
 
-//fetching infor of site based on id from params
-  useEffect(()=>{
-  fetchSiteInfo(id)
-  },[id]);
+const { id } = useParams();
+const {data:siteInfo,isLoading,isError,error}=useSite(id);
+console.log(siteInfo);
+const [open, setOpen] = useState(false);
 
-  const fetchSiteInfo=async(id)=>{
-    const data=await getSiteById(id);
-    setSiteInfo(data);
-
+const updateSite=useUpdateSite();
+const handleSave=async(updatedFormData,id)=>{
+  console.log("edited site info--",updatedFormData);
+  try{
+    await updateSite.mutateAsync({siteId:id,updates:updatedFormData});
+    setOpen(false);
+  }catch(error){
+    console.error("error editing siteinfo")
   }
+}
+  // const handleSave = async(updatedFormData,id) => {
+  //   console.log("handle save clicked with id:", id);
+  //   const updatedData=await updateSiteById(updatedFormData,id);
+  //   setSiteInfo(updatedData);
    
-  const handleSave = async(updatedFormData,id) => {
-    console.log("handle save clicked with id:", id);
-    const updatedData=await updateSiteById(updatedFormData,id);
-    setSiteInfo(updatedData);
-   
-  };
+  // };
+  if (isLoading) return <div className="p-6">Loading sites...</div>;
+  if (isError) return <div className="p-6">Error: {error?.message}</div>;
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">

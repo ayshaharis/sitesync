@@ -1,30 +1,25 @@
 import { useState, useEffect } from "react";
 import SiteCard from "./SiteCard";
 import AddSiteModal from "./AddSiteModal";
-import {addSite,getSites} from "../services/sitesService";
-
+import { useUserSites,useCreateSite } from "../hooks/useSites";
 const SiteGrid = () => {
-const [sites, setSites] = useState([]);
+
+  const createSite=useCreateSite();
+  const{data:sites,isLoading,isError,error}=useUserSites();
   const [showModal, setShowModal] = useState(false);
+ 
+  const handleAddSite=async (siteData)=>{
+   try{
+    await createSite.mutateAsync(siteData);
+    setShowModal(false);
+    alert("site craeted success");
+   }catch(error){
+    console.error("error craeting site",error);
 
-useEffect(()=>{
-  fetchSites();
-},[]);
- const fetchSites=async()=>{
-  const data=await getSites();
-  setSites(data);
- }
-
- const handleSaveSite=async(newSite)=>{
-  const addedSite=await addSite(newSite);
-  setSites([...sites,addedSite]);
-  setShowModal(false);
- }
-
-
-  const handleAddSite = () => {
-    setShowModal(true);
-  };
+   }
+  }
+  if (isLoading) return <div className="p-6">Loading sites...</div>;
+  if (isError) return <div className="p-6">Error: {error?.message}</div>;
 
 
   return (
@@ -34,12 +29,12 @@ useEffect(()=>{
         {/* Add New Site Button */}
         <SiteCard
           name="Add New Site +"
-          onClick={handleAddSite}
+          onClick={()=>setShowModal(true)}
           isAddCard={true}
         />
 
         {/* All Site Cards */}
-        {sites.map((site, index) => (
+        {sites?.map((site, index) => (
           <SiteCard
             key={site.id || index}
             id={site.id}
@@ -56,7 +51,7 @@ useEffect(()=>{
       {showModal && (
         <AddSiteModal
            mode="add"
-          onSave={handleSaveSite}
+          onSave={handleAddSite}
           open={open}
           onClose={() => setShowModal(false)}
         />

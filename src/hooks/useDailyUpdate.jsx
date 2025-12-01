@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchDailyUpdates, saveDailyUpdates,editDailyUpdate } from "../services/dailyUpdatesService";
 
-export const useDailyUpdate = (siteId) => {
+export const useDailyUpdate = (siteId,update) => {
   return useQuery({
     queryKey: ["dailyUpdates", siteId],
     queryFn: () => fetchDailyUpdates(siteId),
