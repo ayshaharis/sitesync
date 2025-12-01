@@ -4,7 +4,6 @@ import SiteProgress from "./SiteProgress";
 import QuickActions from "./QuickActions";
 import { useParams } from "react-router-dom";
 import DailyUpdates from "./DailyUpdates";
-import { useQuery } from "@tanstack/react-query";
 import { useDailyUpdate, useSaveDailyUpdate,useEditDailyUpdate } from "../../hooks/useDailyUpdate";
 
 const SiteDetails = () => {
@@ -14,9 +13,9 @@ const {data:dailyUpdates,isLoading,isError}=useDailyUpdate(id);
 const saveUpdate=useSaveDailyUpdate(id);
 const editUpdate=useEditDailyUpdate(id);
 
-const handleSaveUpdate = async (update) => {
+const handleSaveUpdate = async (rowId) => {
   try{
- await saveUpdate.mutateAsync(update);
+ await saveUpdate.mutateAsync(rowId);
   }catch(error){
     console.error("Error saving daily update:", error);
   }
@@ -51,8 +50,6 @@ const handleSaveUpdate = async (update) => {
          <QuickActions siteId={id} 
          handleSaveUpdate={handleSaveUpdate}/>
         <SiteProgress/>
-       
-    
        
        
       </div>
