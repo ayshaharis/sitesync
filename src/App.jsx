@@ -13,6 +13,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import ProtectedRoute from './components/ProtectedRoute';
 import LandingPage from './components/LandingPage';
+import About from './components/About';
 const AppLayout=()=>{
   return (
     <div className='app-layout'>
@@ -28,6 +29,7 @@ const appRouter = createBrowserRouter([
    { path: "/login", element: <Login /> },
     { path: "/signup", element: <SignUp /> },
         { path: "/", element: <LandingPage/> },
+         { path: "/about", element: <About/> },
 
   {
     path: "/",
