@@ -1,9 +1,11 @@
 import { CheckCircle, Hammer, Users, BarChart, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const LandingPage = () => {
+const About = () => {
   return (
     <div className="w-full bg-gray-50 min-h-screen">
+      
+      {/* NAVBAR */}
       <nav className="w-full flex items-center justify-between shadow-sm bg-white py-3 px-6">
         <Link to="/">
           <h1 className="text-2xl font-bold text-gray-800">SiteSync</h1>
@@ -30,7 +32,7 @@ const LandingPage = () => {
 
       <div className="max-w-6xl mx-auto px-6">
 
-
+        {/* HERO SECTION */}
         <div className="grid md:grid-cols-2 gap-10 items-center py-12">
           <div>
             <h2 className="text-4xl font-bold text-gray-900 mb-4 leading-snug">
@@ -56,30 +58,7 @@ const LandingPage = () => {
           </div>
         </div>
 
- 
-        <div className="w-full bg-white shadow-sm border border-gray-200 rounded-xl p-8 text-center mt-4 mb-16">
-          <h3 className="text-2xl font-bold text-gray-900 mb-3">
-            Ready to Simplify Your Site Management?
-          </h3>
-          <p className="text-gray-600 mb-6">
-            Join SiteSync and manage all your construction sites in one dashboard.
-          </p>
-
-          <div className="flex justify-center space-x-4">
-            <Link to="/signup">
-              <button className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition">
-                Get Started Free
-              </button>
-            </Link>
-
-            <Link to="/login">
-              <button className="px-6 py-3 border border-gray-800 text-gray-800 rounded-lg font-semibold hover:bg-gray-800 hover:text-white transition">
-                Login
-              </button>
-            </Link>
-          </div>
-        </div>
-
+      
         {/* FEATURES */}
         <div className="mt-10">
           <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
@@ -130,6 +109,7 @@ const LandingPage = () => {
           </div>
         </div>
 
+        {/* FINAL CTA */}
         <div className="mt-16 text-center mb-20">
           <Link to="/signup">
             <button className="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow">
@@ -143,4 +123,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default About;
