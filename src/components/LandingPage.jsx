@@ -51,7 +51,7 @@ const LandingPage = () => {
             <p className="text-gray-700 leading-relaxed">
               <strong>SiteSync</strong> centralizes your entire project workflow—daily updates,
               expenses, workforce logs, documents, and client access—all in one place.
-              Powered by <strong>React</strong>, <strong>Supabase</strong>, and <strong>Tailwind CSS</strong>.
+         
             </p>
           </div>
         </div>

@@ -19,7 +19,7 @@ const handleSave=async(updatedFormData,id)=>{
     await updateSite.mutateAsync({siteId:id,updates:updatedFormData});
     setOpen(false);
   }catch(error){
-    console.error("error editing siteinfo")
+    console.error("error editing siteinfo ",error);
   }
 }
   // const handleSave = async(updatedFormData,id) => {

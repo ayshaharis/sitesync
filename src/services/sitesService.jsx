@@ -66,38 +66,48 @@ export const createSite=async(siteData)=>{
 }
 
 
-export const updateSite=async(siteId,updates)=>{
-    const{data:{user},error:userError}=await supabase
-    .auth.getUser();
-    if(!user || userError){
-        console.log("User not authenticated");
-        throw error||new Error("User not authenticated");
+export const updateSite = async (siteId, updates) => {
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+console.log("Update payload:", updates);
+
+  if (!user || userError) {
+    throw new Error("User not authenticated");
+  }
+    const { data: existing, error: fetchError } = await supabase
+      .from("sites")
+      .select("*")
+      .eq("id", siteId)
+      .single();
+  
+    if (fetchError) {
+      console.error("Error fetching existing record:", fetchError);
+      throw fetchError;
     }
+  
+    console.log("Existing record:", existing);
 
-    const {data,error}=await supabase.from("sites")
-    .update({
+  const { data, error } = await supabase.rpc("update_site", {
+    p_id: siteId,
+    p_name: updates.name,
+    p_location: updates.location,
+    p_status: updates.status,
+    p_owner_name: updates.owner_name,
+    p_contact: updates.contact,
+    p_budget: updates.budget,
+    p_notes: updates.notes,
+    p_start_date: updates.start_date,
+    p_end_date: updates.end_date
+  });
 
-        name:updates.name,
-        location:updates.location,
-        status:updates.status,
-        owner_name:updates.owner_name,
-        contact:updates.contact,
-        budget:updates.budget,
-        notes:updates.notes,
-        start_date:updates.start_date,
-        end_date:updates.end_date
-    })
-    .eq("id",siteId)
-    .eq("user_id",user.id)
-    .select()
-    .single();
+  if (error) throw error;
 
-    if(error) throw error;
-    return data;
-    }
+  return data;
+};
 
 
-    //delete site by id with ownership check
+
+
+
     export const deleteSiteById=async(siteId)=>{
         const {data:{user},error:userError}=await supabase.auth.getUser();
         if(!user||userError)
@@ -115,3 +125,21 @@ export const updateSite=async(siteId,updates)=>{
         return true;
     }
     
+//fetch number of active sites yo display on dahsboard
+
+export const fetchActiveSites = async () => {
+
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (userError) throw userError;
+
+  // Fetch ONLY count
+  const { count, error } = await supabase
+    .from("sites")
+    .select("*", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .eq("status", "In Progress");
+
+  if (error) throw error;
+
+  return count; 
+};
