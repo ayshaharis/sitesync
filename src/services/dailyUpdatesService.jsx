@@ -23,7 +23,7 @@ export const saveDailyUpdates=async(update,site_id)=>{
 }
 
 
-//editing individual update. The id to be passed here is of inidvidual daily update row id and not site id also using upsert to update existing row 
+//editing individual update. The id to be passed here is of inidvidual daily update row id and not site id also using rpc to bypass cors to update existing row 
 export const editDailyUpdate = async (rowId, update) => {
   console.log("Updating row ID:", rowId, "with data:", update);
 
@@ -42,25 +42,64 @@ export const editDailyUpdate = async (rowId, update) => {
   console.log("Existing record:", existing);
 
   // Now update with all required fields
-  const { data, error } = await supabase
-    .from("dailyupdates")
-    .update({
-      date: update.date || existing.date,
-      workers: update.workers ?? existing.workers,
-      worker_wage: update.worker_wage ?? existing.worker_wage,
-      expenses: update.expenses ?? existing.expenses,
-      description: update.description || existing.description,
-      summary: update.summary || existing.summary
-    })
-    .eq("id", rowId)
-    .select()
-    .single();
+  const { data, error } = await supabase.rpc('update_daily_update', {
+    p_id: rowId,
+    p_date: update.date,
+    p_workers: update.workers,
+    p_worker_wage: update.worker_wage,
+    p_expenses: update.expenses,
+    p_description: update.description,
+    p_summary: update.summary
+  });
 
   if (error) {
-    console.error("Supabase update error:", error);
+    console.error("RPC error:", error);
     throw error;
   }
 
   console.log("Update successful:", data);
   return data;
 };
+
+
+
+
+
+
+
+/**budget
+: 
+100000
+contact
+: 
+8985565689
+created_at
+: 
+"2025-12-05T10:13:14.458111"
+end_date
+: 
+"2026-01-28"
+id
+: 
+"169b0ab4-a807-4e90-87bb-5ca5ec792f4e"
+location
+: 
+"kerala"
+name
+: 
+"site1"
+notes
+: 
+"construction"
+owner_name
+: 
+"owner"
+start_date
+: 
+"2025-12-05"
+status
+: 
+"In Progress"
+user_id
+: 
+"a19f5e9d-7fa6-4be6-b29e-0f671740b855" */
