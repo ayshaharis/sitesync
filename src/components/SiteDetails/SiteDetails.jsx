@@ -5,13 +5,38 @@ import QuickActions from "./QuickActions";
 import { useParams } from "react-router-dom";
 import DailyUpdates from "./DailyUpdates";
 import { useDailyUpdate, useSaveDailyUpdate,useEditDailyUpdate } from "../../hooks/useDailyUpdate";
-
+import { WeeklySummaryModal } from "./WeeklySummaryModal";
+import { useState } from "react";
+import { fetchSummaryByDate } from "../../services/dailyUpdatesService";
+import { generatePDF } from "../../utils/pdfGenerator";
 const SiteDetails = () => {
   const { id } = useParams();
-
+  const [showSummaryModal, setShowSummaryModal] = useState(false);
 const {data:dailyUpdates,isLoading,isError}=useDailyUpdate(id);
 const saveUpdate=useSaveDailyUpdate(id);
 const editUpdate=useEditDailyUpdate(id);
+  const [exporting, setExporting] = useState(false);
+
+
+//export summary feature
+const handleExport = async (fromDate, toDate) => {
+  setExporting(true);          
+
+  try {
+   
+    const rows = await fetchSummaryByDate(fromDate, toDate, id);
+
+    const doc = generatePDF(rows, "Site", fromDate, toDate);
+    const fileName = `sitesync-${fromDate}-to-${toDate}.pdf`;
+    doc.save(fileName);
+
+  } catch (error) {
+    console.error("Error exporting summary:", error);
+  } finally {
+    setExporting(false);
+    setShowSummaryModal(false);
+  }
+};
 
 const handleSaveUpdate = async (rowId) => {
   try{
@@ -48,11 +73,20 @@ const handleSaveUpdate = async (rowId) => {
       {/* Right: Info + Docs */}
       <div className="space-y-6">
          <QuickActions siteId={id} 
-         handleSaveUpdate={handleSaveUpdate}/>
+         handleSaveUpdate={handleSaveUpdate}
+         openExportModal={() => setShowSummaryModal(true)} />
         <SiteProgress/>
        
        
       </div>
+      {
+        showSummaryModal && (
+          <WeeklySummaryModal
+            onClose={() => setShowSummaryModal(false)}
+            onExport={handleExport}
+          />
+        )
+      }
     </div>
   );
 };

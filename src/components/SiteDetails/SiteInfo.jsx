@@ -22,12 +22,7 @@ const handleSave=async(updatedFormData,id)=>{
     console.error("error editing siteinfo ",error);
   }
 }
-  // const handleSave = async(updatedFormData,id) => {
-  //   console.log("handle save clicked with id:", id);
-  //   const updatedData=await updateSiteById(updatedFormData,id);
-  //   setSiteInfo(updatedData);
-   
-  // };
+
   if (isLoading) return <div className="p-6">Loading sites...</div>;
   if (isError) return <div className="p-6">Error: {error?.message}</div>;
 

@@ -12,7 +12,7 @@ export const useSaveDailyUpdate = (siteId) => {
   const queryClient = useQueryClient();  
 
   return useMutation({
-    mutationFn: (update) => saveDailyUpdates(update, siteId), // update comes here
+    mutationFn: (update) => saveDailyUpdates(update, siteId,update.date), // update comes here
     onSuccess: () => {
       queryClient.invalidateQueries(["dailyUpdates", siteId]); // refresh list
     },

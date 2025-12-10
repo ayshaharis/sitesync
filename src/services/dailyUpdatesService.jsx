@@ -1,22 +1,40 @@
 import {supabase} from "./supabaseClient"
 
 
-//fetching dailyupdates
+//fetching dailyupdates but limiting to 10 updates in UI
 
 export const fetchDailyUpdates=async(site_id)=>{
     const {data,error}=await 
     supabase.from("dailyupdates").select("*")
     .eq("site_id",site_id)
     .order("date",{ascending:false})
+    .limit(7)
     if(error) throw error;
     return data;
 }
+  //adding week_number and year for weekly summary
+
+function getWeekNumber(dateString) {
+  const date = new Date(dateString);
+  const target = new Date(date.valueOf());
+  const dayNr = (date.getDay() + 6) % 7;
+  target.setDate(target.getDate() - dayNr + 3);
+  const firstThursday = new Date(target.getFullYear(), 0, 4);
+  const weekNumber = 1 + Math.round(((target - firstThursday) / 86400000 - 3) / 7);
+  return weekNumber;
+}
+
 
 //saving daily updates
 export const saveDailyUpdates=async(update,site_id)=>{
+  if(!update.date) throw new Error("Date is required");
+  const dateObj=new Date(update.date);
+  const week=getWeekNumber(dateObj);
+  const year=dateObj.getFullYear();
+
     const {data,error}=await
      supabase.from("dailyupdates")
-     .insert([{...update,site_id:site_id}])
+     .insert([{site_id:site_id,week_number:week,year:year,...update}])
      .select().single();
     if(error) throw error;
     return data;
@@ -66,40 +84,21 @@ export const editDailyUpdate = async (rowId, update) => {
 
 
 
+//fetching dailyuopdates by date
+export const fetchSummaryByDate=async(fromDate,toDate,site_id)=>{
+    const{data:user,error:userError}=await supabase.auth.getUser();
+    if(userError||!user){
+        throw userError||new Error("User not authenticated");
+    }
 
-/**budget
-: 
-100000
-contact
-: 
-8985565689
-created_at
-: 
-"2025-12-05T10:13:14.458111"
-end_date
-: 
-"2026-01-28"
-id
-: 
-"169b0ab4-a807-4e90-87bb-5ca5ec792f4e"
-location
-: 
-"kerala"
-name
-: 
-"site1"
-notes
-: 
-"construction"
-owner_name
-: 
-"owner"
-start_date
-: 
-"2025-12-05"
-status
-: 
-"In Progress"
-user_id
-: 
-"a19f5e9d-7fa6-4be6-b29e-0f671740b855" */
+
+    const {data,error}=await supabase
+    .from("dailyupdates")
+    .select("date,workers,worker_wage,expenses,description,summary")
+    .eq("site_id",site_id)
+    .gte("date",fromDate)
+    .lte("date",toDate)
+    .order("date",{ascending:false});
+    if(error) throw error;
+    return data;
+}
