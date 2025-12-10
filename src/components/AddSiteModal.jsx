@@ -1,36 +1,32 @@
-import { useState,useEffect } from "react";
+import { useState,useEffect, use } from "react";
 import ModalWrapper from "./ModalWrapper";
 import { useParams } from "react-router-dom";
-
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { siteSchema } from "../validation/siteSchema";
 const AddSiteModal = ({mode,data,open ,onSave, onClose }) => {
-   const {id}=useParams();
-  const [formData, setFormData] = useState({
-    name: "",
-    location: "",
-    status: "",
-    owner_name:"",
-    contact:"",
-    budget:"",
-    notes:"",
-    start_date:"",
-    end_date:""
+  const {register,handleSubmit,formState:{errors},reset}=useForm(
+    {resolver:zodResolver(siteSchema),
+      defaultValues:data||{}
+    }
 
-  });
+  );
+   const {id}=useParams();
+
   useEffect(()=>{
     if(mode==="edit" && data){
-      setFormData(data)
+      reset(data)
     }
-  },[data,mode])
+  },[data,mode,reset])
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave(formData,id);
+  const onSubmit = (data) => {
+    onSave(data,id);
+       reset();
     onClose();
+ 
   };
+
   if(!open) return null;
 
   return (
@@ -39,102 +35,104 @@ const AddSiteModal = ({mode,data,open ,onSave, onClose }) => {
       <div className="bg-white p-6 rounded-2xl shadow-xl w-11/12 md:w-2/3 lg:w-1/2">
         <h2 className="text-xl font-bold mb-4 text-green-800">{mode==="edit"?"Edit site information":"Add new site details"}</h2>
 
-        <form onSubmit={handleSubmit}className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit(onSubmit)}className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
           <div className="flex flex-col">
             <label className="block text-sm text-gray-700">Site Name</label>
             <input
               type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
+              {...register("name")}
                className=" w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
+            {errors.name&&(<p className="text-red-500 text-sm">{errors.name.message}</p>)}
           </div>
 
           <div className="flex flex-col">
             <label className="block text-sm text-gray-700">Location</label>
             <input
               type="text"
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-              required
+              {...register("location")}
+            
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
+            {errors.location&&(<p className="text-red-500 text-sm">{errors.location.message}</p>)}
           </div>
               <div>
             <label className="block text-sm text-gray-700">Owner's Name</label>
             <input
               type="text"
-              name="owner_name"
-              value={formData.owner_name}
-              onChange={handleChange}
+              {...register("owner_name")}
+         
+ 
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
+            {errors.owner_name&&(<p className="text-red-500 text-sm">{errors.owner_name.message}</p>)}
           </div>
               <div>
             <label className="block text-sm text-gray-700">Contact</label>
             <input
               type="number"
-              name="contact"
-              value={formData.contact}
-              onChange={handleChange}
+              {...register("contact")}
+         
+    
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
+            {errors.contact&&(<p className="text-red-500 text-sm">{errors.contact.message}</p>)}
                </div>
                <div>
             <label className="block text-sm text-gray-700">Work type</label>
             <input
               type="text"
-              name="notes"
-              value={formData.notes}
-              onChange={handleChange}
+              {...register("notes")}
+     
+          
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
+          
           </div>
        
               <div>
             <label className="block text-sm text-gray-700">Enter estimated budget</label>
             <input
               type="number"
-              name="budget"
-              value={formData.budget}
-              onChange={handleChange}
+{...register("budget")}
+        
+            
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
+            {errors.budget&&(<p className="text-red-500 text-sm">{errors.budget.message}</p>)}
           </div>
               <div>
             <label className="block text-sm text-gray-700">Estimated Start Date</label>
             <input
+
               type="date"
-              name="start_date"
-              value={formData.start_date}
-              onChange={handleChange}
-              
+         
+              {...register("start_date")}
+         
+             
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
+             {errors.date&&(<p className="text-red-500 text-sm">{errors.start_date.message}</p>)}
           </div>
               <div>
             <label className="block text-sm text-gray-700">Estimated closure date</label>
             <input
               type="date"
-              name="end_date"
-              value={formData.end_date}
-              onChange={handleChange}
+             
+              {...register("end_date")}
               
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
+             {errors.end_date&&(<p className="text-red-500 text-sm">{errors.end_date.message}</p>)}
           </div>
 
 
           <div>
             <label className="block text-sm text-gray-700">Status</label>
             <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
+     
+              {...register("status")}
               
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             >
