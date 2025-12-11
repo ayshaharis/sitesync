@@ -1,42 +1,32 @@
-import { set } from "zod";
 import ModalWrapper from "../ModalWrapper";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { dailyUpdateSchema } from "../../validation/dailyUpdateSchema";
 
 const DailyUpdateModal = ({ onClose,open, onSave,data,mode,openEdit,updateId }) => {
-  const [form, setForm] = useState({
-    date: "",
-    workers: "",
-    worker_wage: "",
-    expenses: "",
-    description:"",
-    summary: ""
-  });
+
+  const {register,handleSubmit,formState:{errors},reset}=useForm(
+    {
+      resolver:zodResolver(dailyUpdateSchema),
+      defaultValues:data||{}
+    }
+  );
+
   const {id}=useParams();
  useEffect(()=>{
    if(mode==="edit" && data){
-    setForm(data);
+  reset(data)
   }
-  },[data,mode]);
+  },[data,mode,reset]);
  
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const updateData={
-      date:form.date,
-      workers:parseInt(form.workers),
-      worker_wage:parseFloat(form.worker_wage),
-      expenses:parseFloat(form.expenses),
-      description:form.description,
-      summary:form.summary,
-    
-    }
-    onSave(updateData);
-    onClose();
-  };
+const onSubmit = (data) => {
+  onSave(data,updateId);
+  reset();
+  onClose();
+}
 if(!openEdit && !open) return null;
   return (
     <ModalWrapper onClose={onClose}>
@@ -48,18 +38,19 @@ if(!openEdit && !open) return null;
         Record today's construction progress.
       </p>
      
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <input type="date" name="date" value={form.date} onChange={handleChange} className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
-         <input type="number" name="workers" value={form.workers} placeholder="Workers" onChange={handleChange} className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
-
-        <input type="number" name="worker_wage" value={form.worker_wage} placeholder="Total worker wage" onChange={handleChange} className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
-
-        <input type="number" name="expenses" value={form.expenses} placeholder="Other Expenses" onChange={handleChange} className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
-        <input type="text" name="description" value={form.description} placeholder="Description" onChange={handleChange} className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
-
-
-        <textarea name="summary" rows="4" placeholder="Work Summary" value={form.summary} className="w-full border  border-gray-300 p-2 rounded-lg" onChange={handleChange} />
-
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+        <input type="date" {...register("date")} className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
+        {errors.date && <p className="text-red-500">{errors.date.message}</p>}
+         <input type="number"{...register("workers")} className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
+         {errors.workers && <p className="text-red-500">{errors.workers.message}</p>}
+        <input type="number" {...register("worker_wage")} placeholder="Total worker wage"className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
+        {errors.worker_wage && <p className="text-red-500">{errors.worker_wage.message}</p>}
+        <input type="number" {...register("expenses")} placeholder="Other Expenses" className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
+        {errors.expenses && <p className="text-red-500">{errors.expenses.message}</p>}
+        <input type="text" {...register("description")} placeholder="Description"  className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
+        {errors.description && <p className="text-red-500">{errors.description.message}</p>}
+         <textarea {...register("summary")} rows="4" placeholder="Work Summary" className="w-full border  border-gray-300 p-2 rounded-lg" />
+        {errors.summary && <p className="text-red-500">{errors.summary.message}</p>}
         <div className="flex justify-end gap-3">
           <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-300 rounded-lg">
             Cancel
