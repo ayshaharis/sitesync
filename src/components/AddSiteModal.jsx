@@ -11,6 +11,7 @@ const AddSiteModal = ({mode,data,open ,onSave, onClose }) => {
     }
 
   );
+
    const {id}=useParams();
 
   useEffect(()=>{
@@ -62,14 +63,13 @@ const AddSiteModal = ({mode,data,open ,onSave, onClose }) => {
             <input
               type="text"
               {...register("owner_name")}
-         
- 
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
+   
             {errors.owner_name&&(<p className="text-red-500 text-sm">{errors.owner_name.message}</p>)}
           </div>
               <div>
-            <label className="block text-sm text-gray-700">Contact</label>
+            <label className="block text-sm text-gray-700">Owner's Contact</label>
             <input
               type="number"
               {...register("contact")}
@@ -81,13 +81,18 @@ const AddSiteModal = ({mode,data,open ,onSave, onClose }) => {
                </div>
                <div>
             <label className="block text-sm text-gray-700">Work type</label>
-            <input
-              type="text"
-              {...register("notes")}
-     
-          
+            <select 
+                {...register("notes")}
+              
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
-            />
+            >
+         
+              <opton value="Renovation">Renovation</opton>
+              <option value="New construction">New construction</option>
+              <option value="Maintanance">Maintanance</option>
+              <option value="other">Other</option>
+            </select>
+
           
           </div>
        
@@ -135,8 +140,9 @@ const AddSiteModal = ({mode,data,open ,onSave, onClose }) => {
               {...register("status")}
               
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
+              
             >
-              <option value="">Select Status</option>
+              
               <option value="In Progress">In Progress</option>
               <option value="Completed">Completed</option>
               <option value="Pending">Pending</option>

@@ -12,7 +12,7 @@ const Navbar=()=>{
             <ul className="flex  justify-between items-center space-x-10">
             <Link to="/home"><h1 className="text-2xl ">SiteSync</h1></Link>
             <Link to="/about" ><li>About siteSync</li></Link> 
-            <button onClick={logout}><li>Logout</li></button>
+   
              
            
 

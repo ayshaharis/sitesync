@@ -10,9 +10,6 @@ const LandingPage = () => {
         </Link>
 
         <div className="flex items-center space-x-6">
-          <Link to="/about" className="text-gray-700 font-medium hover:text-black">
-            About
-          </Link>
 
           <Link to="/login">
             <button className="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 hover:text-white transition">
@@ -89,10 +86,12 @@ const LandingPage = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { icon: <Hammer />, title: "Site Management", desc: "Create and manage multiple construction sites." },
+              { icon: <CheckCircle />, title: "Daily Updates", desc: "Add progress, materials used, notes, and images." },
+                            { icon: <Clock />, title: "Export Summary", desc: "Generate downloadable project reports for custom date ranges (PDF)" },
+
               { icon: <Users />, title: "Workforce Tracking", desc: "Log workforce, labour cost, and daily wages." },
               { icon: <BarChart />, title: "Expenses & Payments", desc: "Track cash flow, expenses, and received payments." },
-              { icon: <CheckCircle />, title: "Daily Updates", desc: "Add progress, materials used, notes, and images." },
-              { icon: <Clock />, title: "Real-time Sync", desc: "Supabase + React Query for instant live updates." },
+
               { icon: <CheckCircle />, title: "Client Dashboard", desc: "Clients can view site progress securely." },
             ].map((item, i) => (
               <div key={i} className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
@@ -113,12 +112,13 @@ const LandingPage = () => {
           <div className="border-l-4 border-green-600 ml-4 space-y-6">
             {[
               "Client approval workflow",
-              "Auto-generated project reports",
               "Invoice management",
               "Material inventory & stock tracking",
-              "AI-based cost prediction",
               "Offline mode for field engineers",
               "Push notifications for deadlines",
+              "AI-based cost prediction",
+              "PWA support",
+              "Complete Dashboard for Architects/Engineers",
             ].map((item, i) => (
               <div key={i} className="ml-6">
                 <h4 className="font-medium text-gray-800 flex items-start">
