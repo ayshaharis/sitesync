@@ -9,6 +9,7 @@ import { WeeklySummaryModal } from "./WeeklySummaryModal";
 import { useState } from "react";
 import { fetchSummaryByDate } from "../../services/dailyUpdatesService";
 import { generatePDF } from "../../utils/pdfGenerator";
+import { ShimmerForm } from "../Shimmer";
 const SiteDetails = () => {
   const { id } = useParams();
   const [showSummaryModal, setShowSummaryModal] = useState(false);
@@ -61,7 +62,7 @@ const handleSaveUpdate = async (rowId) => {
       {/* Left: Logs, Expenses, Visits */}
       <div className="space-y-6">
         <SiteInfo />
-        {isLoading&&<p>Loading...</p>}
+        {isLoading&&<ShimmerForm/>}
         {isError&&<p>Error loading daily updates.</p>}
       { dailyUpdates&& <DailyUpdates
        dailyUpdates={dailyUpdates} 

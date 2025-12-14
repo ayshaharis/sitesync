@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import SiteCard from "./SiteCard";
 import AddSiteModal from "./AddSiteModal";
 import { useUserSites,useCreateSite } from "../hooks/useSites";
+import { ShimmerForm } from "./Shimmer";
 const SiteGrid = () => {
 
   const createSite=useCreateSite();
@@ -18,7 +19,7 @@ const SiteGrid = () => {
 
    }
   }
-  if (isLoading) return <div className="p-6">Loading sites...</div>;
+  if (isLoading) return (<ShimmerForm/>);
   if (isError) return <div className="p-6">Error: {error?.message}</div>;
 
 
