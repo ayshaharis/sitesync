@@ -32,8 +32,8 @@ const AddSiteModal = ({mode,data,open ,onSave, onClose }) => {
 
   return (
     <ModalWrapper onClose={onClose}>
-<div className="fixed inset-0 bg-black/10 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-2xl shadow-xl w-11/12 md:w-2/3 lg:w-1/2">
+<div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <h2 className="text-xl font-bold mb-4 text-green-800">{mode==="edit"?"Edit site information":"Add new site details"}</h2>
 
         <form onSubmit={handleSubmit(onSubmit)}className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -71,7 +71,9 @@ const AddSiteModal = ({mode,data,open ,onSave, onClose }) => {
               <div>
             <label className="block text-sm text-gray-700">Owner's Contact</label>
             <input
-              type="number"
+              type="text"
+              inputMode="numeric"
+              maxLength={10}
               {...register("contact")}
          
     
@@ -99,7 +101,7 @@ const AddSiteModal = ({mode,data,open ,onSave, onClose }) => {
               <div>
             <label className="block text-sm text-gray-700">Enter estimated budget</label>
             <input
-              type="number"
+              type="text"
 {...register("budget")}
         
             

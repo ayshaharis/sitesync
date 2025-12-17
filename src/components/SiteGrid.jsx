@@ -13,9 +13,9 @@ const SiteGrid = () => {
    try{
     await createSite.mutateAsync(siteData);
     setShowModal(false);
-    alert("site craeted success");
+
    }catch(error){
-    console.error("error craeting site",error);
+    console.error("error creating site : ",error);
 
    }
   }

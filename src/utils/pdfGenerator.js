@@ -1,7 +1,7 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-export function generatePDF(rows, sitename = "Site", fromDate, toDate) {
+export function generatePDF(rows, sitename, fromDate, toDate) {
     const doc = new jsPDF({ unit: "pt", format: "a4", compress: true });
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 40;
@@ -105,14 +105,14 @@ const stats = [
         y += 14;
     });
 
-    doc.setFontSize(11);
-    doc.setFont("helvetica", "bold");
-    doc.text(
-        `Total Expense for ${fromLabel} to ${toLabel}: ${formatCurrency(totals.totalExpenses)} (Other) + ${formatCurrency(totals.totalWorkerWage)} (Wages) = ${formatCurrency(totals.grandTotal)} (Grand Total)`
-,
-        margin,
-        y + 10
-    );
+doc.setFontSize(11);
+doc.setFont("helvetica", "bold");
+
+const totalText = `Total Expense for ${fromLabel} to ${toLabel}: ${formatCurrency(totals.totalExpenses)} (Other) + ${formatCurrency(totals.totalWorkerWage)} (Wages) = ${formatCurrency(totals.grandTotal)} (Grand Total)`;
+
+const wrappedText = doc.splitTextToSize(totalText, usableWidth);
+
+doc.text(wrappedText, margin, y + 10);
 
     return doc;
 }
@@ -139,11 +139,10 @@ function formatDisplayDateTime(dateObj) {
 
 function formatCurrency(val) {
     if (val == null || val === "") return "";
-    return new Intl.NumberFormat(undefined, {
-        style: "currency",
-        currency: "USD",
+    const formatted = new Intl.NumberFormat("en-IN", {
         maximumFractionDigits: 0,
     }).format(Number(val));
+    return "Rs. " + formatted;  
 }
 
 function computeTotals(rows) {
