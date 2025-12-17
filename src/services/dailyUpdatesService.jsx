@@ -62,13 +62,24 @@ export const editDailyUpdate = async (rowId, update) => {
   // Now update with all required fields
   const { data, error } = await supabase.rpc('update_daily_update', {
     p_id: rowId,
+    p_date: update.date??existing.date,
+    p_workers: update.workers??existing.workers,
+    p_worker_wage: update.worker_wage??existing.worker_wage,
+    p_expenses: update.expenses??existing.expenses,
+    p_description: update.description??existing.description,
+    p_summary: update.summary??existing.summary
+  });
+
+  console.log("sending to rpc edits",{
+     p_id: rowId,
     p_date: update.date,
     p_workers: update.workers,
     p_worker_wage: update.worker_wage,
     p_expenses: update.expenses,
     p_description: update.description,
     p_summary: update.summary
-  });
+  })
+
 
   if (error) {
     console.error("RPC error:", error);

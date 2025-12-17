@@ -10,10 +10,13 @@ import { useState } from "react";
 import { fetchSummaryByDate } from "../../services/dailyUpdatesService";
 import { generatePDF } from "../../utils/pdfGenerator";
 import { ShimmerForm } from "../Shimmer";
+import { useSite } from "../../hooks/useSites";
 const SiteDetails = () => {
   const { id } = useParams();
   const [showSummaryModal, setShowSummaryModal] = useState(false);
 const {data:dailyUpdates,isLoading,isError}=useDailyUpdate(id);
+const {data:siteInfo}=useSite(id);
+const sitename=siteInfo?.name||"Site";
 const saveUpdate=useSaveDailyUpdate(id);
 const editUpdate=useEditDailyUpdate(id);
   const [exporting, setExporting] = useState(false);
@@ -27,8 +30,8 @@ const handleExport = async (fromDate, toDate) => {
    
     const rows = await fetchSummaryByDate(fromDate, toDate, id);
 
-    const doc = generatePDF(rows, "Site", fromDate, toDate);
-    const fileName = `sitesync-${fromDate}-to-${toDate}.pdf`;
+    const doc = generatePDF(rows, sitename, fromDate, toDate);
+    const fileName = `${sitename}-${fromDate}-to-${toDate}.pdf`;
     doc.save(fileName);
 
   } catch (error) {
