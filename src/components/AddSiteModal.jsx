@@ -89,7 +89,7 @@ const AddSiteModal = ({mode,data,open ,onSave, onClose }) => {
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             >
          
-              <opton value="Renovation">Renovation</opton>
+              <option value="Renovation">Renovation</option>
               <option value="New construction">New construction</option>
               <option value="Maintanance">Maintanance</option>
               <option value="other">Other</option>
@@ -120,7 +120,7 @@ const AddSiteModal = ({mode,data,open ,onSave, onClose }) => {
              
               className="w-full border border-gray-300 rounded-lg p-2 mt-1"
             />
-             {errors.date&&(<p className="text-red-500 text-sm">{errors.start_date.message}</p>)}
+             {errors.start_date&&(<p className="text-red-500 text-sm">{errors.start_date.message}</p>)}
           </div>
               <div>
             <label className="block text-sm text-gray-700">Estimated closure date</label>

@@ -3,7 +3,7 @@ const Banner = () => {
     <div className="w-full bg-white shadow-md py-12 px-6 rounded-xl border border-gray-200 mb-8">
       <div className="text-center max-w-4xl mx-auto">
 
-        <h2 className="text-4xl font-bold text-black">
+        <h2 className="text-4xl font-bold text-cyan-950">
           Welcome to SiteSync
         </h2>
 

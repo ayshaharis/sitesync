@@ -15,7 +15,7 @@ const QuickActions=({siteId,handleSaveUpdate,openExportModal})=>{
          onClick={()=>setOpen(true)}
          className="w-full flex items-center gap-2 bg-cyan-950 text-white font-medium px-4 py-3 rounded-xl mb-3 hover:bg-gray-800 transition"> 
         Add Today's update +</button>
-        <button onClick={()=>setUpload(true)} className="w-full flex items-center gap-2 border border-gray-300 rounded-xl mb-4 hover:bg-gray-100 transition text-gray-800 text-black font-medium px-4 py-3"> Upload Documents</button>
+        <button onClick={()=>alert("Feature coming soon")} className="w-full flex items-center gap-2 border border-gray-300 rounded-xl mb-4 hover:bg-gray-100 transition text-gray-800 text-black font-medium px-4 py-3"> Upload Documents</button>
         <button 
         onClick={openExportModal}
         className="w-full flex items-center gap-2 border border-gray-300 rounded-xl mb-4 hover:bg-gray-100 transition text-gray-800 text-black font-medium px-4 py-3"
