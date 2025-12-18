@@ -7,10 +7,10 @@ export function generatePDF(rows, sitename, fromDate, toDate) {
     const margin = 40;
     const usableWidth = pageWidth - margin * 2;
 
-    // Header
+
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
-    doc.text("SiteSync - Daily Updates Summary", margin, 60);
+    doc.text("SiteSync - Work Summary", margin, 60);
 
     doc.setFontSize(14);
     doc.setFont("helvetica", "normal");
@@ -24,7 +24,6 @@ export function generatePDF(rows, sitename, fromDate, toDate) {
     doc.text(`Report Period: ${fromLabel} - ${toLabel}`, margin, 106);
     doc.text(`Generated: ${generatedAt}`, margin, 122);
 
-    // Prepare table data
 const tableRows = rows.map((r) => [
     formatDisplayDate(r.date),
     r.workers != null ? r.workers : 0,
@@ -35,7 +34,7 @@ const tableRows = rows.map((r) => [
 ]);
 
 
-    // Use autoTable function directly (not as method)
+
 autoTable(doc, {
     startY: 140,
     head: [["Date", "Workers","Worker Wage", "Other Expenses", "Description", "Work Summary"]],
@@ -46,7 +45,7 @@ autoTable(doc, {
         valign: "top",
     },
     headStyles: {
-        fillColor: [33, 150, 243],
+        fillColor: [22, 163, 74], 
         textColor: 255,
         halign: "left",
     },

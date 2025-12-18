@@ -26,9 +26,9 @@ const {email,password}=data;
  <div
       className=" p-4 md:p-6 border border-gray-300 rounded-lg shadow-lg w-full max-w-md ">
         <h2
-         className=" text-center text-xl sm:text-2xl font-bold mb-4">Login</h2>
+         className=" text-center text-xl sm:text-2xl font-bold mb-4 text-cyan-950">Login</h2>
         <p
-         className="text-sm sm:text-base mb-4 text-gray-600">Enter your credentials to access your account.</p>   
+         className="text-sm sm:text-base mb-4 text-cyan-950">Enter your credentials to access your account.</p>   
         <form 
         onSubmit={handleSubmit(onSubmit)} 
         className="space-y-4">
@@ -63,7 +63,7 @@ const {email,password}=data;
         )}
  
 
-       <button  className="border border-black rounded-2xl bg-black  text-white w-full px-4 py-3 ">Sign in </button>
+       <button  className="bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition rounded-2xl bg-green-500  text-white w-full px-4 py-3 ">Sign in </button>
      <Link to="/signup">  <p className="text-center text-sm mt-3">Not registered? SignUp here</p></Link>
     </form>
       </div>

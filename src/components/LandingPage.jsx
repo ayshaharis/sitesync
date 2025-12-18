@@ -12,13 +12,13 @@ const LandingPage = () => {
         <div className="flex items-center space-x-6">
 
           <Link to="/login">
-            <button className="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 hover:text-white transition">
+            <button className="px-4 py-2 border border-cyan-950 rounded-lg hover:bg-gray-800 hover:text-white transition">
               Login
             </button>
           </Link>
 
           <Link to="/signup">
-            <button className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-black transition">
+            <button className="px-4 py-2 bg-cyan-950 text-white rounded-lg hover:bg-gray-800 transition">
               Sign Up
             </button>
           </Link>
@@ -30,7 +30,7 @@ const LandingPage = () => {
 
         <div className="grid md:grid-cols-2 gap-10 items-center py-12">
           <div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4 leading-snug">
+            <h2 className="text-4xl font-bold text-cyan-950 mb-4 leading-snug">
               Managing Multiple Sites Shouldn't Be This Hard.
             </h2>
             <p className="text-gray-700 leading-relaxed text-lg">
@@ -42,7 +42,7 @@ const LandingPage = () => {
           </div>
 
           <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl font-bold text-cyan-950 mb-4">
               SiteSync Makes It Simple
             </h2>
             <p className="text-gray-700 leading-relaxed">
@@ -55,7 +55,7 @@ const LandingPage = () => {
 
  
         <div className="w-full bg-white shadow-sm border border-gray-200 rounded-xl p-8 text-center mt-4 mb-16">
-          <h3 className="text-2xl font-bold text-gray-900 mb-3">
+          <h3 className="text-2xl font-bold text-cyan-950 mb-3">
             Ready to Simplify Your Site Management?
           </h3>
           <p className="text-gray-600 mb-6">
@@ -77,22 +77,22 @@ const LandingPage = () => {
           </div>
         </div>
 
-        {/* FEATURES */}
+    
         <div className="mt-10">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+          <h3 className="text-2xl font-bold text-cyan-950 mb-6 text-center">
             Available Features
           </h3>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { icon: <Hammer />, title: "Site Management", desc: "Create and manage multiple construction sites." },
-              { icon: <CheckCircle />, title: "Daily Updates", desc: "Add progress, materials used, notes, and images." },
+              { icon: <CheckCircle />, title: "Daily Updates", desc: "Add progress, materials used, notes, and more." },
                             { icon: <Clock />, title: "Export Summary", desc: "Generate downloadable project reports for custom date ranges (PDF)" },
 
               { icon: <Users />, title: "Workforce Tracking", desc: "Log workforce, labour cost, and daily wages." },
               { icon: <BarChart />, title: "Expenses & Payments", desc: "Track cash flow, expenses, and received payments." },
 
-              { icon: <CheckCircle />, title: "Client Dashboard", desc: "Clients can view site progress securely." },
+              { icon: <CheckCircle />, title: "Client Dashboard", desc: "Clients can view site progress securely (Upcoming..)." },
             ].map((item, i) => (
               <div key={i} className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
                 <div className="text-green-600 mb-3">{item.icon}</div>
@@ -103,13 +103,12 @@ const LandingPage = () => {
           </div>
         </div>
 
-        {/* ROADMAP */}
         <div className="mt-20">
           <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
             Upcoming Features
           </h3>
 
-          <div className="border-l-4 border-green-600 ml-4 space-y-6">
+          <div className="border-l-4 border-cyan-950 ml-4 space-y-6">
             {[
               "Client approval workflow",
               "Invoice management",

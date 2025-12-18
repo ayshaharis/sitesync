@@ -26,7 +26,7 @@ export default function Signup() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
     <div className="max-w-md mx-auto mt-20 p-6 border border-gray-300 rounded-lg shadow-lg">
-            <h2 className=" text-center text-2xl font-bold">Sign Up</h2>
+            <h2 className=" text-center text-cyan-950 text-2xl font-bold">Sign Up</h2>
             <p className="text-center text-gray-600 m-4 p-4">Register here.</p>   
             <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-4">
          <input type="text" placeholder="Username"
@@ -67,7 +67,7 @@ export default function Signup() {
         <option value="admin">Admin</option>
 
       </select>
-           <button  className="w-full border border-black rounded-2xl bg-black  text-white p-3   ">Sign Up</button>
+           <button  className="w-full px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition ">Sign Up</button>
          <Link to="/login">  <p className="text-center text-base">Already registered? Login here</p></Link>
         </form>
           </div>

@@ -40,7 +40,7 @@ if(!openEdit && !open) return null;
       </p>
      
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-        <input type="date" {...register("date")} className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
+        <input type="date" {...register("date")} placeholder="Enter Date" className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
         {errors.date && <p className="text-red-500">{errors.date.message}</p>}
          <input type="number" inputMode="numeric" {...register("workers")} placeholder="Total No.of workers" className=" w-full border border-gray-300 rounded-lg p-2 mt-1" />
          {errors.workers && <p className="text-red-500">{errors.workers.message}</p>}
