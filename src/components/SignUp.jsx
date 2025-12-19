@@ -26,7 +26,7 @@ export default function Signup() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
     <div className="max-w-md mx-auto mt-20 p-6 border border-gray-300 rounded-lg shadow-lg">
-            <h2 className=" text-center text-cyan-950 text-2xl font-bold">Sign Up</h2>
+            <h2 className=" text-center text-cyan-950 text-2xl font-bold">SiteSync - Sign Up</h2>
             <p className="text-center text-gray-600 m-4 p-4">Register here.</p>   
             <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-4">
          <input type="text" placeholder="Username"

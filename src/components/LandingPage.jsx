@@ -90,7 +90,7 @@ const LandingPage = () => {
                             { icon: <Clock />, title: "Export Summary", desc: "Generate downloadable project reports for custom date ranges (PDF)" },
 
               { icon: <Users />, title: "Workforce Tracking", desc: "Log workforce, labour cost, and daily wages." },
-              { icon: <BarChart />, title: "Expenses & Payments", desc: "Track cash flow, expenses, and received payments." },
+              { icon: <BarChart />, title: "Expenses & Payments", desc: "Track expenses" },
 
               { icon: <CheckCircle />, title: "Client Dashboard", desc: "Clients can view site progress securely (Upcoming..)." },
             ].map((item, i) => (
@@ -110,14 +110,12 @@ const LandingPage = () => {
 
           <div className="border-l-4 border-cyan-950 ml-4 space-y-6">
             {[
-              "Client approval workflow",
-              "Invoice management",
-              "Material inventory & stock tracking",
-              "Offline mode for field engineers",
-              "Push notifications for deadlines",
-              "AI-based cost prediction",
-              "PWA support",
-              "Complete Dashboard for Architects/Engineers",
+              "Photo uploads for site updates",
+              "Enhanced analytics dashboard",
+              "Budget tracking & expense categories",
+              "Offline mode for field engineers-PWA Support",
+              "Client access- Read only"
+            
             ].map((item, i) => (
               <div key={i} className="ml-6">
                 <h4 className="font-medium text-gray-800 flex items-start">
