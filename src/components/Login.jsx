@@ -26,7 +26,7 @@ const {email,password}=data;
  <div
       className=" p-4 md:p-6 border border-gray-300 rounded-lg shadow-lg w-full max-w-md ">
         <h2
-         className=" text-center text-xl sm:text-2xl font-bold mb-4 text-cyan-950">Login</h2>
+         className=" text-center text-xl sm:text-2xl font-bold mb-4 text-cyan-950">Login to SiteSync</h2>
         <p
          className="text-sm sm:text-base mb-4 text-cyan-950">Enter your credentials to access your account.</p>   
         <form 
