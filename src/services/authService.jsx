@@ -8,7 +8,8 @@ export const signUp = async ( full_name, email, password, role ) => {
       data: {
         full_name:full_name,
         role:role||'user',
-      }
+      },
+        emailRedirectTo: `${window.location.origin}/login`
     }
   });
 

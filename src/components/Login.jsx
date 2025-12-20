@@ -10,14 +10,23 @@ export default function Login() {
 const {register,handleSubmit,formState:{errors}}=useForm()
   const navigate = useNavigate();
   
-
+const [errorMessage, setErrorMessage] = useState(null);
   const onSubmit = async (data) => {
 const {email,password}=data;
     try {
       await signIn(email, password);
       navigate("/home");
     } catch (err) {
-      alert(err.message);
+      if (err.message.includes("Email not confirmed") || 
+          err.message.includes("email") || 
+          err.message.includes("verify") ||
+          err.message.includes("confirmation")) {
+        setErrorMessage(
+          "Please verify your email first. Check your inbox for the verification link."
+        );
+      } else {
+        setErrorMessage(err.message);
+      }
     }
   };
 
@@ -29,6 +38,12 @@ const {email,password}=data;
          className=" text-center text-xl sm:text-2xl font-bold mb-4 text-cyan-950">Login to SiteSync</h2>
         <p
          className="text-sm sm:text-base mb-4 text-cyan-950">Enter your credentials to access your account.</p>   
+            {/* Error message display */}
+        {errorMessage && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-600 text-sm">{errorMessage}</p>
+          </div>
+        )}
         <form 
         onSubmit={handleSubmit(onSubmit)} 
         className="space-y-4">

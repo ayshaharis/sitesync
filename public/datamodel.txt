@@ -14,34 +14,5 @@ Site
   completionDate:"some date"
 }
 
-worker
-{
-    id:"worker-1",
-    name:"Aysha",
-    phone:"12134378",
-    department:"carpenter",
-    wage:"1000"
 
-}
 
-expenses
-{
-    site_id:"siteaid"
-    site_name:"site 1",
-    date:date,
-    amount:"10000",
-    description:"sepnt for waht",
-    bill:upload bill
-}
-
-daily log
-{
-    site:siteid,
-    site:sitename,
-    date:todaysdate,
-    worker:worker name ,
-    wage:900,
-    payment:900
-    paid:900,
-    pending:000
-}

@@ -4,24 +4,74 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { minLength } from "zod";
+import {useState} from "react"
 
 
 export default function Signup() {
   const navigate=useNavigate();
+  const [showVerificationMessage,setShowVerificationMessage]=useState(false)
   const {register,handleSubmit,formState:{errors},reset}=useForm()
 
 
-  const onSubmit = async (data) => {
- const {full_name,email,password,role}=data;
+const onSubmit = async (data) => {
+    const { full_name, email, password, role } = data;
 
     try {
-      await signUp( full_name, email, password, role );
-      reset()
-      navigate("/login");
+      const result = await signUp(full_name, email, password, role);
+      
+      // Check if user already exists
+      if (result.user && result.user.identities && result.user.identities.length === 0) {
+        alert("An account with this email already exists. Please login instead.");
+        navigate("/login");
+        return;
+      }
+      
+      setUserEmail(email);
+      setShowVerificationMessage(true);
+      reset();
     } catch (err) {
-      alert(err.message);
+      // Handle other signup errors
+      if (err.message.includes("already registered") || 
+          err.message.includes("already exists") ||
+          err.message.includes("User already registered")) {
+        alert("An account with this email already exists. Please login instead.");
+        navigate("/login");
+      } else {
+        alert(err.message);
+      }
     }
   };
+
+if (showVerificationMessage) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="max-w-md mx-auto p-8 border border-gray-300 rounded-lg shadow-lg text-center">
+          <div className="mb-6">
+         
+          </div>
+          <h2 className="text-2xl font-bold text-cyan-950 mb-4">
+            Check Your Email!
+          </h2>
+          <p className="text-gray-600 mb-2">
+            We've sent a verification link to your registered mail
+          </p>
+     
+          <p className="text-gray-600 mb-8">
+            Please check your inbox and click the verification link to activate your account.
+          </p>
+          <button
+            onClick={() => navigate("/login")}
+            className="w-full px-6 py-3 bg-cyan-950 text-white rounded-lg font-semibold hover:bg-cyan-900 transition"
+          >
+            Go to Login
+          </button>
+          <p className="text-sm text-gray-500 mt-4">
+            Didn't receive the email? Check your spam folder.
+          </p>
+        </div>
+      </div>
+    );
+  } 
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
