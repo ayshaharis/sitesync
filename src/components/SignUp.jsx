@@ -25,10 +25,10 @@ const onSubmit = async (data) => {
         navigate("/login");
         return;
       }
-      
-    
-      setShowVerificationMessage(true);
+      alert("Account created successfully! Please login.");
+      navigate("/login");
       reset();
+     
     } catch (err) {
       // Handle other signup errors
       if (err.message.includes("already registered") || 
