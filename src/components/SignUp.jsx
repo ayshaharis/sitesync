@@ -30,7 +30,7 @@ const onSubmit = async (data) => {
       reset();
      
     } catch (err) {
-      // Handle other signup errors
+     
       if (err.message.includes("already registered") || 
           err.message.includes("already exists") ||
           err.message.includes("User already registered")) {
@@ -78,6 +78,10 @@ if (showVerificationMessage) {
     <div className="max-w-md mx-auto mt-20 p-6 border border-gray-300 rounded-lg shadow-lg">
             <h2 className=" text-center text-cyan-950 text-2xl font-bold">SiteSync - Sign Up</h2>
             <p className="text-center text-gray-600 m-4 p-4">Register here.</p>   
+         
+      <div className="mb-4 p-2 bg-blue-50 border border-blue-200 rounded text-xs text-blue-700 text-center">
+        Demo mode: Instant signup enabled
+      </div>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-4">
          <input type="text" placeholder="Username"
          {...register("full_name",{required:true})}
@@ -112,6 +116,7 @@ if (showVerificationMessage) {
           <p className="text-red-500 text-sm">{errors.password.message}</p>
         )}
       <select
+       {...register("role")}
       className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg appearance-none">
         <option value="" >Select Role</option>
         <option value="admin">Admin</option>
