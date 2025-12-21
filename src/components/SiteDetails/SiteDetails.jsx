@@ -24,15 +24,24 @@ const editUpdate=useEditDailyUpdate(id);
 
 //export summary feature
 const handleExport = async (fromDate, toDate) => {
-  setExporting(true);          
+  setExporting(true);
 
   try {
-   
     const rows = await fetchSummaryByDate(fromDate, toDate, id);
 
     const doc = generatePDF(rows, sitename, fromDate, toDate);
     const fileName = `${sitename}-${fromDate}-to-${toDate}.pdf`;
-    doc.save(fileName);
+
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      const blob = doc.output("blob");
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    } else {
+      doc.save(fileName);
+    }
 
   } catch (error) {
     console.error("Error exporting summary:", error);
