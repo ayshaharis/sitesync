@@ -20,12 +20,13 @@ const sitename=siteInfo?.name||"Site";
 const saveUpdate=useSaveDailyUpdate(id);
 const editUpdate=useEditDailyUpdate(id);
   const [exporting, setExporting] = useState(false);
+   const isInAppBrowser =
+    /FBAN|FBAV|Instagram|WhatsApp|LinkedIn/i.test(navigator.userAgent);
 
 
 //export summary feature
 const handleExport = async (fromDate, toDate) => {
-  const isInAppBrowser =
-    /FBAN|FBAV|Instagram|WhatsApp|LinkedIn/i.test(navigator.userAgent);
+ 
 
   if (isInAppBrowser) {
     alert(
@@ -41,11 +42,7 @@ const handleExport = async (fromDate, toDate) => {
 
   if (isMobile) {
     pdfWindow = window.open("", "_blank");
-    if (pdfWindow) {
-      pdfWindow.document.write(
-        "<p style='font-family:sans-serif;padding:20px'>Generating PDF…</p>"
-      );
-    }
+ 
   }
 
   try {
@@ -87,7 +84,12 @@ const handleSaveUpdate = async (rowId) => {
 
  return (
     <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-   
+      {/**this for handling in app browser  */}
+      { isInAppBrowser && (
+  <div className="bg-yellow-100 text-yellow-800 p-4 rounded mb-4">
+    PDF export is blocked in this browser. Open in <strong>Chrome</strong> or <strong>Safari</strong>.
+  </div>
+)}
       {/* Left: Logs, Expenses, Visits */}
       <div className="space-y-6">
         <SiteInfo />
