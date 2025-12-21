@@ -26,18 +26,26 @@ const editUpdate=useEditDailyUpdate(id);
 const handleExport = async (fromDate, toDate) => {
   setExporting(true);
 
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  let pdfWindow = null;
+
+
+  if (isMobile) {
+    pdfWindow = window.open("", "_blank");
+    
+  }
+
   try {
     const rows = await fetchSummaryByDate(fromDate, toDate, id);
 
     const doc = generatePDF(rows, sitename, fromDate, toDate);
     const fileName = `${sitename}-${fromDate}-to-${toDate}.pdf`;
 
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-    if (isMobile) {
+    if (isMobile && pdfWindow) {
       const blob = doc.output("blob");
       const url = URL.createObjectURL(blob);
-      window.open(url, "_blank");
+      pdfWindow.location.href = url;
+
       setTimeout(() => URL.revokeObjectURL(url), 10000);
     } else {
       doc.save(fileName);
@@ -45,11 +53,13 @@ const handleExport = async (fromDate, toDate) => {
 
   } catch (error) {
     console.error("Error exporting summary:", error);
+    if (pdfWindow) pdfWindow.close();
   } finally {
     setExporting(false);
     setShowSummaryModal(false);
   }
 };
+
 
 const handleSaveUpdate = async (rowId) => {
   try{
