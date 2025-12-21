@@ -24,20 +24,32 @@ const editUpdate=useEditDailyUpdate(id);
 
 //export summary feature
 const handleExport = async (fromDate, toDate) => {
+  const isInAppBrowser =
+    /FBAN|FBAV|Instagram|WhatsApp|LinkedIn/i.test(navigator.userAgent);
+
+  if (isInAppBrowser) {
+    alert(
+     "To download the PDF, please open this page in Chrome or Safari."
+    );
+    return;
+  }
+
   setExporting(true);
 
   const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   let pdfWindow = null;
 
-
   if (isMobile) {
     pdfWindow = window.open("", "_blank");
-    
+    if (pdfWindow) {
+      pdfWindow.document.write(
+        "<p style='font-family:sans-serif;padding:20px'>Generating PDF…</p>"
+      );
+    }
   }
 
   try {
     const rows = await fetchSummaryByDate(fromDate, toDate, id);
-
     const doc = generatePDF(rows, sitename, fromDate, toDate);
     const fileName = `${sitename}-${fromDate}-to-${toDate}.pdf`;
 
@@ -45,15 +57,10 @@ const handleExport = async (fromDate, toDate) => {
       const blob = doc.output("blob");
       const url = URL.createObjectURL(blob);
       pdfWindow.location.href = url;
-
       setTimeout(() => URL.revokeObjectURL(url), 10000);
     } else {
       doc.save(fileName);
     }
-
-  } catch (error) {
-    console.error("Error exporting summary:", error);
-    if (pdfWindow) pdfWindow.close();
   } finally {
     setExporting(false);
     setShowSummaryModal(false);
