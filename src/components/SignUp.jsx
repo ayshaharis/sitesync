@@ -26,7 +26,7 @@ const onSubmit = async (data) => {
         return;
       }
       
-      setUserEmail(email);
+    
       setShowVerificationMessage(true);
       reset();
     } catch (err) {
