@@ -1,12 +1,57 @@
-# React + Vite
+#  SiteSync
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**SiteSync** is a modern construction site management web application built to help engineers and site owners track daily progress, workforce, expenses, and site documentation — all in one place.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+### 📅 Daily Updates
+- Add daily site updates with:
+  - Date
+  - Workforce count
+  - Worker wages
+  - Additional expenses
+  - Work summary
+- Edit existing daily updates
+- View updates in a clean card-based UI
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+### 📊 Summary & Reports
+- Export weekly or date-range summaries as **PDF**
+- Auto-calculated totals for expenses and wages
+- Mobile-safe PDF handling (browser detection)
+
+### 🔐 Data Management
+- Site-based data isolation
+- Secure backend powered by Supabase
+- Optimized data fetching using React Query
+
+### 📱 User Experience
+- Responsive & mobile-friendly UI
+- Shimmer loaders for better perceived performance
+- Clear empty and error states
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **React**
+- **Vite**
+- **Tailwind CSS**
+- **React Router**
+- **TanStack React Query**
+- **Lucide Icons**
+
+### Backend & Services
+- **Supabase** (Database + Storage)
+- **Supabase Auth**
+- **Supabase Storage** for image uploads
+
+### Utilities
+- **jsPDF** – PDF generation
+- **jsPDF AutoTable** – Table formatting in PDFs
+
+
+
