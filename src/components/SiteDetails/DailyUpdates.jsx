@@ -1,6 +1,6 @@
 import DailyUpdateCard from "./DailyUpdateCard";
 
-const DailyUpdates = ({ dailyUpdates,handleSaveUpdates }) => (
+const DailyUpdates = ({ dailyUpdates,onSubmitDailyUpdate  }) => (
   <div className="space-y-4 mt-4">
     <h2 className="text-lg font-semibold mb-3">Daily Updates</h2>
 
@@ -11,7 +11,7 @@ const DailyUpdates = ({ dailyUpdates,handleSaveUpdates }) => (
         <DailyUpdateCard 
         key={index}
          update={update} 
-         onEditSave={(rowId,updatedData)=>handleSaveUpdates(rowId,updatedData)} />
+        onSubmitDailyUpdate={onSubmitDailyUpdate} />
       ))
     )}
   </div>
