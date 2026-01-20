@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchDailyUpdates, saveDailyUpdates,editDailyUpdate } from "../services/dailyUpdatesService";
 
-export const useDailyUpdate = (siteId,update) => {
+export const useDailyUpdate = (siteId) => {
   return useQuery({
     queryKey: ["dailyUpdates", siteId],
     queryFn: () => fetchDailyUpdates(siteId),
@@ -12,7 +12,8 @@ export const useSaveDailyUpdate = (siteId) => {
   const queryClient = useQueryClient();  
 
   return useMutation({
-    mutationFn: (update) => saveDailyUpdates(update, siteId,update.date), // update comes here
+    mutationFn: ({data,selectedImages}) =>
+       saveDailyUpdates(data, siteId,selectedImages), // update comes here
     onSuccess: () => {
       queryClient.invalidateQueries(["dailyUpdates", siteId]); // refresh list
     },
@@ -27,9 +28,9 @@ export const useEditDailyUpdate = (siteId) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ rowId, updatedData  }) => {
+    mutationFn: ({ rowId, updatedData ,selectedImages ,remainingImages}) => {
       console.log("Editing row:", rowId, "with data:", updatedData);
-      return   editDailyUpdate(rowId, updatedData);
+      return   editDailyUpdate(rowId, updatedData,selectedImages,remainingImages);
     },
     
 

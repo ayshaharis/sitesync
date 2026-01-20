@@ -2,7 +2,7 @@ import { useState } from "react";
 import DailyUpdateModal from "./DailyUpdateModal";
 import { WeeklySummaryModal } from "./WeeklySummaryModal";
 
-const QuickActions=({siteId,handleSaveUpdate,openExportModal})=>{
+const QuickActions=({siteId,onSubmitDailyUpdate,handleEditUpdate,openExportModal})=>{
     const [open,setOpen]=useState(false);
     const [upload,setUpload]=useState(false);
 
@@ -24,7 +24,7 @@ const QuickActions=({siteId,handleSaveUpdate,openExportModal})=>{
        {open&&(
         <DailyUpdateModal 
         onClose={()=>setOpen(false)}
-        onSave={handleSaveUpdate}
+       onSubmitDailyUpdate={onSubmitDailyUpdate}
         open={open}
         mode="add"
         />

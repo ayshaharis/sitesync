@@ -26,8 +26,6 @@ const editUpdate=useEditDailyUpdate(id);
 
 //export summary feature
 const handleExport = async (fromDate, toDate) => {
- 
-
   if (isInAppBrowser) {
     alert(
      "To download the PDF, please open this page in Chrome or Safari."
@@ -65,22 +63,23 @@ const handleExport = async (fromDate, toDate) => {
 };
 
 
-const handleSaveUpdate = async (rowId) => {
+
+const handleSubmitDailyUpdate=async({mode,rowId,data,selectedImages,remainingImages})=>{
   try{
- await saveUpdate.mutateAsync(rowId);
-  }catch(error){
-    console.error("Error saving daily update:", error);
-  }
- 
- };
- 
-  const handleEditUpdate = async (rowId, updatedData) => {
-    try{
-    await editUpdate.mutateAsync({ rowId, updatedData });
-    }catch(error){
-      console.error("Error editing daily update oops:", error);  
+    if(mode==="edit"){
+      await editUpdate.mutateAsync({ rowId, updatedData:data,selectedImages,remainingImages });
+    }else{
+      await saveUpdate.mutateAsync({data,selectedImages,remainingImages});
     }
-  };
+  }catch(error){
+    console.error("Error submitting daily update:", error);
+  }
+    }
+    
+  
+
+
+
 
  return (
     <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -97,7 +96,7 @@ const handleSaveUpdate = async (rowId) => {
         {isError&&<p>Error loading daily updates.</p>}
       { dailyUpdates&& <DailyUpdates
        dailyUpdates={dailyUpdates} 
-       handleSaveUpdates={handleEditUpdate}/>}
+       onSubmitDailyUpdate={handleSubmitDailyUpdate}/>}
        
        
       </div>
@@ -105,7 +104,7 @@ const handleSaveUpdate = async (rowId) => {
       {/* Right: Info + Docs */}
       <div className="space-y-6">
          <QuickActions siteId={id} 
-         handleSaveUpdate={handleSaveUpdate}
+         onSubmitDailyUpdate={handleSubmitDailyUpdate}
          openExportModal={() => setShowSummaryModal(true)} />
         <SiteProgress/>
        
