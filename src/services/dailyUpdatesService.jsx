@@ -1,15 +1,13 @@
 import { supabase } from "./supabaseClient";
 import { uploadImages } from "./imageService";
-import { deleteImage } from "./imageService";
 
-// Fetching dailyupdates but limiting to 7 updates in UI
+// Fetching dailyupdates for a site
 export const fetchDailyUpdates = async (site_id) => {
   const { data, error } = await supabase
     .from("dailyupdates")
     .select("*")
     .eq("site_id", site_id)
     .order("date", { ascending: false })
-    .limit(7);
   if (error) throw error;
   return data;
 };

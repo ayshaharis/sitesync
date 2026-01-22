@@ -106,7 +106,7 @@ const handleSubmitDailyUpdate=async({mode,rowId,data,selectedImages,remainingIma
          <QuickActions siteId={id} 
          onSubmitDailyUpdate={handleSubmitDailyUpdate}
          openExportModal={() => setShowSummaryModal(true)} />
-        <SiteProgress/>
+        <SiteProgress />
        
        
       </div>

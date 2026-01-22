@@ -5,6 +5,7 @@ export const useDailyUpdate = (siteId) => {
   return useQuery({
     queryKey: ["dailyUpdates", siteId],
     queryFn: () => fetchDailyUpdates(siteId),
+    enabled: !!siteId, // only run if siteId is available
   });
 };
 
