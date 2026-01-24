@@ -11,6 +11,7 @@ import { fetchSummaryByDate } from "../../services/dailyUpdatesService";
 import { generatePDF } from "../../utils/pdfGenerator";
 import { ShimmerForm } from "../Shimmer";
 import { useSite } from "../../hooks/useSites";
+import DocumentGrid from "./DocumentGrid";
 const SiteDetails = () => {
   const { id } = useParams();
   const [showSummaryModal, setShowSummaryModal] = useState(false);
@@ -107,9 +108,12 @@ const handleSubmitDailyUpdate=async({mode,rowId,data,selectedImages,remainingIma
          onSubmitDailyUpdate={handleSubmitDailyUpdate}
          openExportModal={() => setShowSummaryModal(true)} />
         <SiteProgress />
+           <DocumentGrid/>
+      
        
        
       </div>
+     
       {
         showSummaryModal && (
           <WeeklySummaryModal

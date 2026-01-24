@@ -1,29 +1,54 @@
 import { Link } from "react-router-dom";
-const  SiteCard=({id,name,location,status,onClick,isAddCard})=>{
+import { MapPin } from "lucide-react";
 
-  if(isAddCard){
+const SiteCard = ({ id, name, location, status, onClick, isAddCard }) => {
+
+  if (isAddCard) {
     return (
-         <div
-        className="p-6 bg-green-100 border border-green-600 rounded-xl shadow cursor-pointer flex items-center justify-center text-green-700 font-semibold text-xl"
+      <div
         onClick={onClick}
+        className="h-32 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-gray-50 transition"
       >
-        + Add New Site
+        <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-xl">
+          +
+        </div>
+        <p className="font-medium">Add New Site</p>
+        <p className="text-sm text-gray-500">Create a new construction site</p>
       </div>
-
-    )
+    );
   }
-    return(
-      <Link to={`/site/${id}`}>
-          <div className="h-30 flex flex-col justify-between bg-white shadow-lg rounded-xl p-4 hover:shadow-xl transition cursor-pointer">
-                <h1 className="text-lg font-bold">{name}</h1>
-                <h3 className="text-gray-600">{location}</h3>
-                <h3 className="text-sm text-blue-600">{status}</h3>
-            </div>
-      </Link>
-        
-       
-    )
-}
 
+  const statusStyles = {
+    "In Progress": "bg-green-100 text-green-700",
+    "Completed": "bg-blue-100 text-blue-700",
+    "Pending": "bg-orange-100 text-orange-700",
+  };
+
+  return (
+    <Link to={`/site/${id}`}>
+      <div className="h-32 bg-white border border-gray-200 rounded-xl p-4 flex flex-col justify-between hover:shadow-md transition">
+        
+        {/* Top row */}
+        <div className="flex items-start justify-between">
+          <h2 className="font-semibold text-lg">{name}</h2>
+          <span
+            className={`text-xs px-3 py-1 rounded-full font-medium ${
+              statusStyles[status]
+            }`}
+          >
+            {status}
+          </span>
+        </div>
+
+        {/* Location */}
+        <div className="flex items-center gap-2 text-gray-600 text-sm">
+          <MapPin size={18} />
+          <span>{location}</span>
+        </div>
+
+      </div>
+    </Link>
+  );
+};
 
 export default SiteCard;
