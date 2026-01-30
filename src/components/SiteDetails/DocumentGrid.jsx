@@ -1,6 +1,12 @@
 import DocumentCard from "./DocumentCard";
-import { useState } from "react";
+import {  useState } from "react";
+import { useDocuments } from "../../hooks/useDocumentUpload";
+import { useParams } from "react-router-dom";
+import { FileText } from 'lucide-react';
 const DocumentGrid=()=>{
+    const {id}=useParams();
+    const {data:documents=[],isLoading,isError}=useDocuments(id);
+    console.log("documents",documents);
     const [activeCategory,setActiveCategory]=useState("All Documents");
     const categories=[
         "All Documents",
@@ -11,20 +17,20 @@ const DocumentGrid=()=>{
         "Photos",
         "Others"
     ];
+ 
 
-    const documents=[
-        {id:1,name:"siteplan.pdf",date:"2023-10-01",category:"Drawings"},
-        {id:2,name:"contract.docx",date:"2023-10-05",category:"Contracts"},
-        {id:3,name:"invoice1.pdf",date:"2023-10-10",category:"Bills And Invoices"},
-        {id:4,name:"drawing1.dwg",date:"2023-10-12",category:"Drawings"},
-        {id:5,name:"permit.pdf",date:"2023-10-15",category:"Permits"},
-    ];
+    if(isLoading){
+        return <div>Loading documents...</div>
+    }
+    if(isError){
+        return <div>Error loading documents.</div>
+    }
+        const filteredDocuments=
+        activeCategory==="All Documents"?documents:documents.filter((doc)=>doc.category===activeCategory)
 
-    const filteredDocuments=activeCategory==="All Documents"?documents:documents.filter((doc)=>doc.category===activeCategory)
-    
     return(
         <div className="bg-white rouded-2xl shadow-sm border border-gray-200 p-6 ">
-            Documents
+            Documents <FileText className="inline-block ml-2 mb-1"/>
             <div className="">
                  <div>
                       <ul  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
@@ -33,7 +39,7 @@ const DocumentGrid=()=>{
                             <li 
                             key={index}
                             onClick={()=>setActiveCategory(cat)}
-                            className="border border-gray-200 rounded-xl p-2">{cat}(10)</li>
+                            className="border border-gray-200 rounded-xl p-2">{cat} ({cat==="All Documents"?filteredDocuments.length:filteredDocuments.filter((doc)=>doc.category===cat).length})</li>
                   
                       
 
