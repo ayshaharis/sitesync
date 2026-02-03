@@ -108,7 +108,7 @@ const handleSubmitDailyUpdate=async({mode,rowId,data,selectedImages,remainingIma
          onSubmitDailyUpdate={handleSubmitDailyUpdate}
          openExportModal={() => setShowSummaryModal(true)} />
         <SiteProgress />
-           <DocumentGrid/>
+          <DocumentGrid/>
       
        
        
