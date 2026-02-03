@@ -57,7 +57,7 @@ const DocumentCard = ({ document }) => {
         </p>
 
 
-        <div className="flex gap-4 pt-2 opacity-0 group-hover:opacity-100 transition">
+        <div className="flex gap-4 pt-2 ">
           <a
             href={file_url}
             target="_blank"
