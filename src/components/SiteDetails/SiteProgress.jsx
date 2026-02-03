@@ -1,6 +1,7 @@
 import { useDailyUpdate } from "../../hooks/useDailyUpdate";
 import { useSite } from "../../hooks/useSites";
 import { useParams } from "react-router-dom";
+import { ShimmerDocumentCard } from "../Shimmer";
 
 const SiteProgress = ( ) => {
   const {id}=useParams();
@@ -11,7 +12,7 @@ console.log("site data:", site);
 console.log("budget raw:", site?.budget);
 
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p><ShimmerDocumentCard/></p>;
   if (error) return <p>Error loading updates</p>;
 
   const totalExpenses = dailyUpdates.reduce(

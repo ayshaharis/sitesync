@@ -3,6 +3,7 @@ import ModalWrapper from "../ModalWrapper";
 import { useDocumentUpload } from "../../hooks/useDocumentUpload";
 import {Upload} from "lucide-react";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 const UploadDocumentModal = ({ onClose }) => {
   const [documents, setDocuments] = useState([]);
   const fileInputRef = useRef(null);
@@ -14,6 +15,11 @@ const UploadDocumentModal = ({ onClose }) => {
     isError,
     isSuccess
 }=useDocumentUpload();
+useEffect(()=>{
+    if(isSuccess){
+      onClose();
+    }
+},[isSuccess,onClose])
 
   const handleFileChange = (e) => {
     const filesArray=Array.from(e.target.files);
@@ -38,10 +44,6 @@ const UploadDocumentModal = ({ onClose }) => {
 ))
 setDocuments(updatedDocuments);
   }
-
-
-
-
 
   const isAllCategoriesSelected=documents.length>0&&documents.every((doc)=>doc.category)
 
@@ -68,22 +70,31 @@ setDocuments(updatedDocuments);
       </h2>
       
       
-      <div className="border border-gray-300 rounded-lg p-6 cursor-pointer">
-     <span className=""
-     onClick={()=>fileInputRef.current.click()}>
-   <Upload size={35}/> 
-   Click here to upload documents
-   </span>
+<div
+  className="border-2 border-dashed border-gray-300 rounded-xl p-8 cursor-pointer hover:border-cyan-900 transition flex flex-col items-center justify-center gap-3 text-center"
+  onClick={() => fileInputRef.current.click()}
+>
+  <div className="h-14 w-14 flex items-center justify-center rounded-full bg-cyan-50 text-cyan-900">
+    <Upload size={28} />
+  </div>
 
+  <p className="font-medium text-gray-800">
+    Click to upload files
+  </p>
 
-      <input
-        type="file"
-        multiple
-        onChange={handleFileChange}
-        className="hidden"
-        ref={fileInputRef} 
-      />
-        </div>      
+  <p className="text-sm text-gray-500">
+   (Max 10MB each)
+  </p>
+
+  <input
+    type="file"
+    multiple
+    onChange={handleFileChange}
+    className="hidden"
+    ref={fileInputRef}
+  />
+</div>
+    
 
         {/**preview uploaded documents */}
 
@@ -91,42 +102,69 @@ setDocuments(updatedDocuments);
             <ul>
     {documents.map((doc)=>(
       
-            <li key={doc.id} className="border border-gray-200 rounded-lg p-2 m-2">
-            {doc.name}
-            <select className="m-2 p-2" required onChange={(e)=>onCategoryChange(doc.id,e.target.value)} >
-                <option value="">Select Category</option>
-                <option value="Contracts">Contracts</option>
-                <option value="Drawings">Drawings</option>
-                <option value="Bills And Invoices">Bills And Invoices</option>
-                <option value="Permits">Permits</option>
-                <option value="Photos">Photos</option>
-                <option value="Others">Others</option>
-            </select>
-        </li>
+    <li
+  key={doc.id}
+  className="border border-gray-200 rounded-xl p-4 mb-3 flex flex-col gap-3"
+>
+  <div className="flex items-center justify-between">
+    <p className="text-sm font-medium text-gray-800 truncate">
+      {doc.name}
+    </p>
+  </div>
+
+  <select
+    className={`w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2
+      ${
+        !doc.category
+          ? "border-red-400 focus:ring-red-300"
+          : "border-gray-300 focus:ring-cyan-900"
+      }`}
+    required
+    onChange={(e) => onCategoryChange(doc.id, e.target.value)}
+  >
+    <option value="">Select Category *</option>
+    <option value="Contracts">Contracts</option>
+    <option value="Drawings">Drawings</option>
+    <option value="Bills And Invoices">Bills And Invoices</option>
+    <option value="Permits">Permits</option>
+    <option value="Photos">Photos</option>
+    <option value="Others">Others</option>
+  </select>
+</li>
+
        
                 
             ))}
             </ul>
          
         </div>
-        <p className="text-red-500 text-sm">{showError&&"Please select category for all documents"}</p>
+ {showError && (
+  <p className="text-red-500 text-sm mt-2 text-center">
+    Please select a category for all documents
+  </p>
+)}
 
-      <div className="flex gap-3 m-2 p-2">
-        <button
-        onClick={handleSaveDocuments}
-          className="w-full bg-cyan-950 text-white font-medium px-4 py-3 rounded-xl hover:bg-gray-800 transition" 
-           >
-      {isUploading?"Uploading...":"Upload"}  
-      {isSuccess && !isUploading ? "Uploaded Successfully" : ""}
-        </button>
+  <div className="flex gap-3 mt-6">
+  <button
+    onClick={handleSaveDocuments}
+    disabled={isUploading || isSuccess|| !isAllCategoriesSelected}
+    className="w-full bg-cyan-950 text-white font-medium px-4 py-3 rounded-xl hover:bg-cyan-900 transition disabled:opacity-50"
+  >
+    {isUploading
+      ? "Uploading..."
+      : isSuccess
+      ? "Upload Success"
+      : "Upload"}
+  </button>
 
-        <button
-          onClick={onClose}
-          className="w-full bg-gray-200 text-black font-medium px-4 py-3 rounded-xl hover:bg-gray-400 transition"
-        >
-          Cancel
-        </button>
-      </div>
+  <button
+    onClick={onClose}
+    className="w-full bg-gray-100 text-gray-700 font-medium px-4 py-3 rounded-xl hover:bg-gray-200 transition"
+  >
+    Cancel
+  </button>
+</div>
+
     </ModalWrapper>
   );
 };

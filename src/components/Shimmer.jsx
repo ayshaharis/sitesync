@@ -1,5 +1,5 @@
 // components/Shimmer.jsx
-import React from "react";
+
 
 export const SkeletonLine = ({className = "h-4 w-full rounded-md"}) => (
   <div className={`bg-gray-200 dark:bg-gray-700 ${className} animate-pulse`}></div>
@@ -25,3 +25,14 @@ export const ShimmerForm = () => (
     </div>
   </div>
 );
+
+
+export const ShimmerDocumentCard = () => (
+  <div className="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition overflow-hidden">
+    <div className="h-32 bg-gray-200 dark:bg-gray-700 animate-pulse"></div> 
+    <div className="p-4 space-y-2">      
+      <div className="h-4 bg-gray-200 dark:bg-gray-700 animate-pulse"></div>      
+         
+    </div>
+  </div>
+);  
