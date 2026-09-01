@@ -1,10 +1,10 @@
 
 import './App.css'
 import ReactDOM from 'react-dom/client';
+import {lazy,Suspense} from 'react'
 import { BrowserRouter as Router,Route, Routes, Outlet, createBrowserRouter, RouterProvider} from 'react-router-dom'
 import DashBoard from './components/Dashboard'
 import Navbar from './components/Navbar'
-import SiteDetails from './components/SiteDetails/SiteDetails'
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
 import Banner from './components/Banner';
@@ -13,12 +13,17 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import ProtectedRoute from './components/ProtectedRoute';
 import LandingPage from './components/LandingPage';
-import About from './components/About';
+
+//lazyloading
+const SiteDetails=lazy(()=>import('./components/SiteDetails/SiteDetails.jsx'))
+const About=lazy(()=>import('./components/About.jsx'))
 const AppLayout=()=>{
   return (
     <div className='app-layout'>
      <Navbar/>
+     <Suspense fallback={<div>Loading...</div>}>
      <Outlet/>
+     </Suspense>
      <Footer/>
     </div>
   );
@@ -35,7 +40,9 @@ const appRouter = createBrowserRouter([
     path: "/",
     element: (
       <AuthProvider>
+        
         <AppLayout />
+     
       </AuthProvider>
     ),
     children: [
@@ -43,6 +50,7 @@ const appRouter = createBrowserRouter([
          element:
           <HomePage />
          },
+         { path: "about", element: <About /> },
      
 
       {
